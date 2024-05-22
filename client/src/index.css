@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.profilePhoto{
+  border-radius: 50%;
+}
+#root{
+  width: 100vw;
+}
+.containerScrollPage{
+  position: relative;
+  left: 4%;
+  width: 64vw;
+}
