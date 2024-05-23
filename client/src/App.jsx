@@ -1,33 +1,35 @@
-import React from "react";
-import "./App.css";
-import Navbar from "./Components/Navbar";
-import Scrollpage from "./Components/Scrollpage";
-import Inbox from "./Components/Inbox";
+import React, { useState } from 'react';
+import './App.css';
+import Navbar from './Components/Navbar';
+import Scrollpage from './Components/Scrollpage';
+import Inbox from './Components/Inbox';
+import SearchBox from './Components/SearchBox';
+import Notification from './Components/Notification';
+import Explorepage from './Components/Explorepage';
+import AddPost from './Components/AddPost';
 
 export default function App() {
-  // const [data, setData] = React.useState(null);
+  const [active, setActive] = useState('Home');
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // React.useEffect(() => {
-  //   fetch("/api")
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data.message[3]))
-  //     .catch((error) => {
-  //       console.error('There was a problem with your fetch operation:', error);
-  //     });
-  // }, []);
+  const handleDarkMode = (mode) => {
+    setIsDarkMode(mode);
+  };
+
+  const handleClick = (navActive) => {
+    setActive(navActive);
+  };
 
   return (
     <>
-      {/* 
-          Navbar
-          Scroll page 
-          inbox
-      */}
-     <div className="container2 flex flex-row justify-between">
-     <Navbar/>
-     <Scrollpage/>
-      <Inbox/>
-     </div>
+      <div className={`container2 flex flex-row justify-between ${isDarkMode ? 'dark' : 'light'}`}>
+        <Navbar activeFunction={handleClick} darkMode={handleDarkMode} isDarkMode={isDarkMode} />
+        {active === 'Search' && <SearchBox isDarkMode={isDarkMode} />}
+        {active === 'Notification' && <Notification isDarkMode={isDarkMode} />}
+        {active === 'Explore' && active!=="Add Post" ? <Explorepage /> : <Scrollpage active={active} />}
+        {active === 'Add Post' && active!=="Explore" ? <AddPost activeFunction={handleClick} /> : undefined}
+        <Inbox />
+      </div>
     </>
   );
 }

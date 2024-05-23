@@ -8,7 +8,84 @@
   width: 100vw;
 }
 .containerScrollPage{
-  position: relative;
+  position: fixed;
   left: 4%;
   width: 64vw;
+}
+.inbox{
+  margin-left: 1em;
+  margin-top: 0.2em;
+}
+.timeAgo{
+  margin-left: -6.5em;
+  margin-top: 1.9em;
+  font-size: 0.7em;
+}
+.containerSearchBox{
+  position:  fixed;
+  left: 3%; 
+  top: 0;
+}
+.containerNotificaion{
+  position:  fixed;
+  left: 3%; 
+  top: 0;
+}
+.containerExplorePage{
+  position: fixed;
+  left: 4%;
+  width: 64vw;
+}
+i:hover{
+  color: yellow;
+  filter: drop-shadow(0 0 0.75rem white);
+}
+h3{
+  margin-left: 1.5em;
+  margin-top: 1em;
+  font-weight: 600;
+}
+.messages i:hover{
+  color: aliceblue;
+  filter: drop-shadow(0 0 0.50rem white);
+  
+}
+/* App.css */
+
+.container2.light {
+  background-color: white;
+  color: black;
+}
+
+.container2.dark {
+  background-color: black;
+  color: white;
+}
+
+/* Additional styles */
+
+.containerScrollPage {
+  overflow-y: auto;
+}
+
+.post-container {
+  /* margin-bottom: 16px; Add some margin between posts */
+}
+.containerPost{
+  margin: 0;
+}
+.containerAddPost{
+  position: fixed;
+  left: 18%;
+  top: 36%;
+  height: 37vh;
+  border-radius: 15px;
+  border: 3px white solid;
+  filter: drop-shadow(0 0 0.50rem white);
+  transition: filter ease-in-out 0.5s;
+
+}
+.blur{
+  filter: blur(3px);
+  transition: filter ease-in-out 0.5s;
 }
