@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function Chataccount() {
+export default function Chataccount({receiverId}) {
   return (
-    <div className="messages bg-gray-500 w-inherit h-10 flex flex-row ">
+    <div className="messages w-inherit h-10 flex flex-row my-0 hover:bg-gray-900" >
       <div className="profilePhoto inbox w-8 h-8 bg-white"></div>
-      <div className="accountName text-sm text-white mx-2">_._jenil.p_._</div>
+      <div className="z-10 accountName text-sm text-white mx-2">{receiverId}</div>
       <div className="timeAgo text-gray-800">2 min ago</div>
       <div className="flex flex-row mx-9 gap-3 self-center relative -right-28">
       <div>

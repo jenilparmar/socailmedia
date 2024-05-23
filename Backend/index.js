@@ -7,6 +7,7 @@ const app = express();
 
 
 ///////////////////////Database Work//////////////////////////
+// --------------- Scroll page suerscema ---------------
 mongoose.connect("mongodb://127.0.0.1:27017/SocailMedia")
 const userSceama = new mongoose.Schema({
   accountName:String,
@@ -14,9 +15,31 @@ const userSceama = new mongoose.Schema({
   post : String
 })
 const userAccountModel = mongoose.model("Post" , userSceama)
+// -----------Chat apge user scema -------------
+const userChatSchema = new mongoose.Schema({
+  accountName: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  receivers: {
+    type: Map,
+    of: new mongoose.Schema({
+      // Assuming receivers is a map of user IDs to some metadata
+      // Define the structure of the metadata here
+      read: { type: Boolean, default: false },
+      message: { type: String, required: true },
+      // Add more fields as necessary
+    }),
+    required: true,
+  }
+}
+);
 
-
-
+const UserChat = mongoose.model('UserChat', userChatSchema);
 
 //////////////////Crud////////////////////
  function AddToDataBase(collection){
@@ -53,11 +76,17 @@ function FindAllFromDataBase() {
   });
  }
 
+
+ function AddToUserChatDatabase(object) {
+      UserChat.insertMany(object)
+ }
+
+
 ////////////////////////////DataSending to Front End /////////////////
 app.get("/PostData", (req, res) => {
   userAccountModel.find({}) // Retrieve all documents
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.send(data); // Send the data to the client
     })
     .catch((err) => {
@@ -65,8 +94,24 @@ app.get("/PostData", (req, res) => {
       res.status(500).send("Error retrieving data from the database");
     });
 });
+app.get('/GetChats/:name', (req, res) => {
+  const name = req.params.name;
 
-
+  UserChat.find({ accountName: name })
+    .then((data) => {
+      if (data.length > 0) {
+        // If there are matching documents, send them as an array
+        res.send(data);
+      } else {
+        // If no matching documents are found, send a message
+        res.status(404).send("Nothing to show. Start a new chat.");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving data from the database');
+    });
+});
 
 ///////////////////////////////Routing Work/////////////////////
 app.get("/api", (req, res) => {

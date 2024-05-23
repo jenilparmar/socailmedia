@@ -7,6 +7,7 @@
   import Notification from './Components/Notification';
   import Explorepage from './Components/Explorepage';
   import AddPost from './Components/AddPost';
+import Profile from './Components/Profile';
   // React.useEffect(() => {
   //   fetch("/PostData")
   //     .then((res) => res.json())
@@ -34,6 +35,7 @@
           {active === 'Explore' && active!=="Add Post" ? <Explorepage /> : <Scrollpage active={active} />}
           {active === 'Add Post' && active!=="Explore" ? <AddPost activeFunction={handleClick} /> : undefined}
           <Inbox />
+          {active==="Profile" ? <Profile/>:undefined}
         </div>
       </>
     );
