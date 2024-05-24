@@ -1,5 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { getImageL1, getImageL2, getImageL3, getImageL4 } = require('./likeConfiguration');
+
+
 
  
 const PORT = 5000;
@@ -112,6 +115,20 @@ app.get('/GetChats/:name', (req, res) => {
       res.status(500).send('Error retrieving data from the database');
     });
 });
+////////////////////////Like Buttons//////////////////////////
+
+
+
+app.get("/GetLikeButtons",(req,res)=>{
+  const likesObj = {
+  1:getImageL1(),
+  2:getImageL2(),
+  3:getImageL3(),
+  4:getImageL4()
+}
+
+  res.send(likesObj);
+})
 
 ///////////////////////////////Routing Work/////////////////////
 app.get("/api", (req, res) => {
