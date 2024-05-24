@@ -18,9 +18,10 @@ import Commentbox from './Components/Commentbox';
    
     const [active, setActive] = useState('Home');
     const [isDarkMode, setIsDarkMode] = useState(false);
-    const [commentActive , setCommentActive] = useState(false)
-    const handleCommentBox=()=>{
-        setCommentActive(!commentActive)
+    const [commentActive , setCommentActive] = useState(null)
+    const handleCommentBox=(commenterId)=>{
+
+        setCommentActive(commenterId)
     }
     const handleDarkMode = (mode) => {
       setIsDarkMode(mode);
@@ -40,7 +41,7 @@ import Commentbox from './Components/Commentbox';
           {active === 'Add Post' && active!=="Explore" ? <AddPost activeFunction={handleClick} /> : undefined}
          
           {active==="Profile" ? <Profile/>:undefined}
-          {commentActive? <Inbox />:<Commentbox/>}
+          {commentActive? <Inbox />:<Commentbox handleCommentBox={handleCommentBox} />}
         </div>
       </>
     );

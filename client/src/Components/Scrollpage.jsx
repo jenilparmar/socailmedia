@@ -14,6 +14,8 @@ export default function Scrollpage({ isDarkMode, active,handleCommentBox,comment
         return res.json();
       })
       .then((data) => {
+        console.log(data);
+      // console.log(data["comment"]);
         setPosts(data); // Update state with fetched data
       })
       .catch((error) => {
@@ -28,7 +30,7 @@ export default function Scrollpage({ isDarkMode, active,handleCommentBox,comment
         <i className="z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white"></i>
         {/* Map over posts array and render Post components */}
         {posts.map((post) => ( 
-          <Post   handleCommentBox={handleCommentBox} commentActive = {commentActive} name={post.accountName} date={post.date} img = {post["post"]}/> // Assuming "accountName" is the correct property
+          <Post handleCommentBox={handleCommentBox} commenterID={post["_id"]} comment={post["comment"]} commentActive = {commentActive} name={post.accountName} date={post.date} img = {post["post"]}/> // Assuming "accountName" is the correct property
         ))}
       </div>
     </>

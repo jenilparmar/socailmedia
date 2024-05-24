@@ -226,7 +226,7 @@ html{
   background: #db0000;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #181717;
+  background: red;
 }
 input::placeholder{
   color: rgb(194, 194, 194);
@@ -236,4 +236,14 @@ input::placeholder{
 }
 input{
 text-align: center;
+}
+.comm{
+  background-color: black;
+  width: 32vw;
+  z-index: 20;
+  position: fixed;
+  top: 87%;
+  right: 0%;
+  height: 13vh;
+  border-top: 2px solid #3d3a3a;
 }

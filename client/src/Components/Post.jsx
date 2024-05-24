@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 
-export default function Post({ name, date, img ,handleCommentBox,commentActive}) {
+export default function Post({ name,comment,commenterID,date, img, handleCommentBox, commentActive }) {
   const [imgArray, setImgArray] = useState([]);
-  const handleClickForComment=()=>{
-    handleClickForComment()
-  }
+  let commenterId = commenterID;
+  const handleClickForComment = (id) => {
+    handleCommentBox(id); // Call the function passed as props to handle comment box
+  };
+
   useEffect(() => {
     fetch('/GetLikeButtons')
-      .then((res) => {
-        return res.json()
-      }).then((data) => {
-        // console.log(data);
+      .then((res) => res.json())
+      .then((data) => {
         let array = [];
         Object.keys(data).forEach((key) => {
-          array.push(data[key]); // Push the values, not the keys
-        })
+          array.push(data[key]);
+        });
         setImgArray(array);
       }).catch((err) => {
         console.log(err);
-      })
+      });
   }, []);
+
+  // Group the imgArray into sub-arrays of two items each
+  const groupedImgArray = [];
+  for (let i = 0; i < imgArray.length; i += 2) {
+    groupedImgArray.push(imgArray.slice(i, i + 2));
+  }
 
   return (
     <div className="post-container flex flex-col bg-black">
@@ -34,19 +40,25 @@ export default function Post({ name, date, img ,handleCommentBox,commentActive})
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-xs indent-3 max-h-6">{"HI i am a sample discriptiohn it will be a great app and website though"}</div>
-            <div className="flex flex-row justify-center gap-2 my-3 ">
-              {/* Mapping through imgArray to render divs */}
-              {imgArray.map((imgUrl, index) => (
-                <div key={index} className="w-12 h-10  hover:border-2 border-slate-200   self-center" style={{
-                  borderRadius: "10px",
-                  backgroundImage: `url(${imgUrl})`, // Corrected formatting of backgroundImage URL
-                  backgroundSize: "contain",
-                  backgroundPosition: "center",
-                  backgroundRepeat:"no-repeat"
-                }}></div>
+            <div className="flex flex-col gap-2 my-3">
+              {groupedImgArray.map((group, groupIndex) => (
+                <div className="flex flex-row justify-center gap-2" key={groupIndex}>
+                  {group.map((imgUrl, index) => (
+                    <div className="flex flex-row gap-2" key={index}>
+                      <div className="w-20 h-20 hover:border-2 border-slate-200 self-center" style={{
+                        borderRadius: "10px",
+                        backgroundImage: `url(${imgUrl})`,
+                        backgroundSize: "contain",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat"
+                      }}></div>
+                      <div className="self-center text-gray-700 text-sm">{"25%"}</div>
+                    </div>
+                  ))}
+                </div>
               ))}
             </div>
-            <div className="text-white" onClick={handleClickForComment}>See comments</div>
+            <div className="text-white text-sm mx-3 hover:text-blue-700" onClick={()=>handleClickForComment(commenterID)}>See comments</div>
           </div>
         </div>
       </div>

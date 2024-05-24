@@ -1,23 +1,32 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { getImageL1, getImageL2, getImageL3, getImageL4 } = require('./likeConfiguration');
+const {
+  getImageL1,
+  getImageL2,
+  getImageL3,
+  getImageL4,
+} = require("./likeConfiguration");
 
-
-
- 
 const PORT = 5000;
 const app = express();
 
-
 ///////////////////////Database Work//////////////////////////
-// --------------- Scroll page suerscema ---------------
-mongoose.connect("mongodb://127.0.0.1:27017/SocailMedia")
+// --------------- Scroll page scema ---------------
+mongoose.connect("mongodb://127.0.0.1:27017/SocailMedia");
 const userSceama = new mongoose.Schema({
-  accountName:String,
-  date :Date,
-  post : String
-})
-const userAccountModel = mongoose.model("Post" , userSceama)
+  accountName: String,
+  date: Date,
+  post: String,
+  comment: {
+    type: Map,
+    of: new mongoose.Schema({
+      followerAccountName: String,
+      commentText : String
+    }),
+  },
+});
+
+const userAccountModel = mongoose.model("Post", userSceama);
 // -----------Chat apge user scema -------------
 const userChatSchema = new mongoose.Schema({
   accountName: {
@@ -38,56 +47,65 @@ const userChatSchema = new mongoose.Schema({
       // Add more fields as necessary
     }),
     required: true,
-  }
-}
-);
+  },
+});
 
-const UserChat = mongoose.model('UserChat', userChatSchema);
+const UserChat = mongoose.model("UserChat", userChatSchema);
 
 //////////////////Crud////////////////////
- function AddToDataBase(collection){
- userAccountModel.insertMany(collection).then((res)=>{
-  console.log(res);
- }).catch((err)=>{
-  console.log(err);
- });
+function AddToDataBase(collection) {
+  userAccountModel
+    .insertMany(collection)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 
+// AddToDataBase(sampleData)
 function FindOneFromDataBase(name) {
-  userAccountModel.findOne({}).then((res)=>{
-    console.log(res);
-  }).catch((err)=>{
-    console.log(err);
-  })
+  userAccountModel
+    .findOne({})
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 function FindAllFromDataBase() {
-  userAccountModel.find({}).then((data) => {
-    
-    // Send the response to the client
-    return data;
-    
-  }).catch((err) => {
-    console.log(err);
-  });
+  userAccountModel
+    .find({})
+    .then((data) => {
+      // Send the response to the client
+      return data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
- function DeleteFromDataBase(name) {
-  userAccountModel.deleteOne(FindOneFromDataBase(name)).then((res)=>{
-    console.log(res);
-  }).catch((err)=>{
-    console.log(err);
-  });
- }
+function DeleteFromDataBase(name) {
+  userAccountModel
+    .deleteOne(FindOneFromDataBase(name))
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
-
- function AddToUserChatDatabase(object) {
-      UserChat.insertMany(object)
- }
-
+function AddToUserChatDatabase(object) {
+  UserChat.insertMany(object);
+}
 
 ////////////////////////////DataSending to Front End /////////////////
 app.get("/PostData", (req, res) => {
-  userAccountModel.find({}) // Retrieve all documents
+  userAccountModel
+    .find({}) // Retrieve all documents
     .then((data) => {
       // console.log(data);
       res.send(data); // Send the data to the client
@@ -97,7 +115,7 @@ app.get("/PostData", (req, res) => {
       res.status(500).send("Error retrieving data from the database");
     });
 });
-app.get('/GetChats/:name', (req, res) => {
+app.get("/GetChats/:name", (req, res) => {
   const name = req.params.name;
 
   UserChat.find({ accountName: name })
@@ -112,23 +130,21 @@ app.get('/GetChats/:name', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send('Error retrieving data from the database');
+      res.status(500).send("Error retrieving data from the database");
     });
 });
 ////////////////////////Like Buttons//////////////////////////
 
-
-
-app.get("/GetLikeButtons",(req,res)=>{
+app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {
-  1:getImageL1(),
-  2:getImageL2(),
-  3:getImageL3(),
-  4:getImageL4()
-}
+    1: getImageL1(),
+    2: getImageL2(),
+    3: getImageL3(),
+    4: getImageL4(),
+  };
 
   res.send(likesObj);
-})
+});
 
 ///////////////////////////////Routing Work/////////////////////
 app.get("/api", (req, res) => {
@@ -136,8 +152,8 @@ app.get("/api", (req, res) => {
     message: {
       1: "Jenil",
       2: "Parmar",
-      3: "Web-developer"
-    }
+      3: "Web-developer",
+    },
   });
 });
 
