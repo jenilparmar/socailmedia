@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-export default function Post({ name,comment,commenterID,date, img, handleCommentBox, commentActive }) {
+export default function Post({ name,comment,date, img, handleCommentBox ,handleNameForComment}) {
   const [imgArray, setImgArray] = useState([]);
-  let commenterId = commenterID;
-  const handleClickForComment = (id) => {
-    handleCommentBox(id); // Call the function passed as props to handle comment box
+  
+  const handleClickForComment = () => {
+    handleCommentBox();
+    handleNameForComment(name);
+    // Call the function passed as props to handle comment box
   };
 
   useEffect(() => {
@@ -21,6 +23,7 @@ export default function Post({ name,comment,commenterID,date, img, handleComment
       });
   }, []);
 
+ 
   // Group the imgArray into sub-arrays of two items each
   const groupedImgArray = [];
   for (let i = 0; i < imgArray.length; i += 2) {
@@ -58,7 +61,7 @@ export default function Post({ name,comment,commenterID,date, img, handleComment
                 </div>
               ))}
             </div>
-            <div className="text-white text-sm mx-3 hover:text-blue-700" onClick={()=>handleClickForComment(commenterID)}>See comments</div>
+            <div className="text-white cursor-pointer text-sm mx-3 hover:text-blue-700" onClick={handleClickForComment}>See comments</div>
           </div>
         </div>
       </div>

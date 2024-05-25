@@ -18,10 +18,14 @@ import Commentbox from './Components/Commentbox';
    
     const [active, setActive] = useState('Home');
     const [isDarkMode, setIsDarkMode] = useState(false);
-    const [commentActive , setCommentActive] = useState(null)
-    const handleCommentBox=(commenterId)=>{
+    const [commentActive , setCommentActive] = useState(true)
+    const [viewComment,setViewComments]= useState(null)
+    const handleViewComments=(object)=>{
+      setViewComments(object)
+    }
+    const handleCommentBox=()=>{
 
-        setCommentActive(commenterId)
+        setCommentActive(!commentActive)
     }
     const handleDarkMode = (mode) => {
       setIsDarkMode(mode);
@@ -37,11 +41,11 @@ import Commentbox from './Components/Commentbox';
           <Navbar activeFunction={handleClick} darkMode={handleDarkMode} isDarkMode={isDarkMode} />
           {active === 'Search' && <SearchBox isDarkMode={isDarkMode} />}
           {active === 'Notification' && <Notification isDarkMode={isDarkMode} />}
-          {active === 'Explore' && active!=="Add Post" ? <Explorepage /> : <Scrollpage active={active} handleCommentBox={handleCommentBox} commentActive = {commentActive}/>}
+          {active === 'Explore' && active!=="Add Post" ? <Explorepage /> : <Scrollpage active={active} handleCommentBox={handleCommentBox} setViewComments={setViewComments} commentActive = {commentActive}/>}
           {active === 'Add Post' && active!=="Explore" ? <AddPost activeFunction={handleClick} /> : undefined}
          
           {active==="Profile" ? <Profile/>:undefined}
-          {commentActive? <Inbox />:<Commentbox handleCommentBox={handleCommentBox} />}
+          {commentActive? <Inbox />:<Commentbox handleCommentBox={handleCommentBox} setViewComments={setViewComments} viewComments={viewComment}/>}
         </div>
       </>
     );

@@ -21,7 +21,7 @@ const userSceama = new mongoose.Schema({
     type: Map,
     of: new mongoose.Schema({
       followerAccountName: String,
-      commentText : String
+      commentText: String,
     }),
   },
 });
@@ -63,7 +63,6 @@ function AddToDataBase(collection) {
       console.log(err);
     });
 }
-
 
 // AddToDataBase(sampleData)
 function FindOneFromDataBase(name) {
@@ -133,6 +132,18 @@ app.get("/GetChats/:name", (req, res) => {
       res.status(500).send("Error retrieving data from the database");
     });
 });
+app.get("/GetComments/:name", (req, res) => {
+  const name = req.params.name;
+  userAccountModel.findOne({accountName:name}).then((data)=>{
+    res.send(data)
+  }).catch((err)=>{
+    res.send(err);
+  })
+});
+
+
+
+
 ////////////////////////Like Buttons//////////////////////////
 
 app.get("/GetLikeButtons", (req, res) => {
