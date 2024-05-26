@@ -15,7 +15,7 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
         <i className={`fa-solid fa-house text-${color} justify-center self-center`} onClick={() => handleClick('Home')}></i>
         <i className={`fa-solid fa-magnifying-glass text-${color} justify-center self-center`} onClick={() => handleClick('Search')}></i>
         <i className={`fa-regular fa-heart text-${color} justify-center self-center`} onClick={() => handleClick('Notification')}></i>
-        <i className={`fa-regular fa-compass text-${color} justify-center self-center`} onClick={() => handleClick('Explore')}></i>
+
         <i className={`fa-solid fa-plus text-${color} justify-center self-center`} onClick={() => handleClick('Add Post')}></i>
         {!isDarkMode ? (
           <i className={`fa-regular fa-moon text-${color} justify-center self-center`} onClick={() => darkMode(true)}></i>

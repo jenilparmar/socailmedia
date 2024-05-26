@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { MongoClient, ObjectId } = require("mongodb");
+
 const {
   getImageL1,
   getImageL2,
@@ -9,143 +11,93 @@ const {
 
 const PORT = 5000;
 const app = express();
+url = "mongodb://127.0.0.1:27017/SocailMedia";
+const dbName = "MemeMenia";
+let db;
+MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((client) => {
+    console.log("Connected successfully to MongoDB server");
+    db = client.db(dbName);
+  })
+  .catch((error) => console.error("MongoDB connection error:", error));
 
-///////////////////////Database Work//////////////////////////
-// --------------- Scroll page scema ---------------
-mongoose.connect("mongodb://127.0.0.1:27017/SocailMedia");
-const userSceama = new mongoose.Schema({
-  accountName: String,
-  date: Date,
-  post: String,
-  comment: {
-    type: Map,
-    of: new mongoose.Schema({
-      followerAccountName: String,
-      commentText: String,
-    }),
-  },
-});
-
-const userAccountModel = mongoose.model("Post", userSceama);
-// -----------Chat apge user scema -------------
-const userChatSchema = new mongoose.Schema({
-  accountName: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  receivers: {
-    type: Map,
-    of: new mongoose.Schema({
-      // Assuming receivers is a map of user IDs to some metadata
-      // Define the structure of the metadata here
-      read: { type: Boolean, default: false },
-      message: { type: String, required: true },
-      // Add more fields as necessary
-    }),
-    required: true,
-  },
-});
-
-const UserChat = mongoose.model("UserChat", userChatSchema);
-
-//////////////////Crud////////////////////
-function AddToDataBase(collection) {
-  userAccountModel
-    .insertMany(collection)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-// AddToDataBase(sampleData)
-function FindOneFromDataBase(name) {
-  userAccountModel
-    .findOne({})
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-function FindAllFromDataBase() {
-  userAccountModel
-    .find({})
+app.use(express.json());
+//////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/users", (req, res) => {
+  const user = {
+    accountName: "Jenil parmar",
+    email : "exampleEmail@gmail.com",
+    passward:"hashredvdfkgjg",
+  };
+  db.collection("Users")
+    .insertOne(user)
     .then((data) => {
-      // Send the response to the client
-      return data;
+      console.log(data);
+      res.send("Leee bhai");
     })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-function DeleteFromDataBase(name) {
-  userAccountModel
-    .deleteOne(FindOneFromDataBase(name))
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function AddToUserChatDatabase(object) {
-  UserChat.insertMany(object);
-}
-
-////////////////////////////DataSending to Front End /////////////////
-app.get("/PostData", (req, res) => {
-  userAccountModel
-    .find({}) // Retrieve all documents
-    .then((data) => {
-      // console.log(data);
-      res.send(data); // Send the data to the client
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send("Error retrieving data from the database");
-    });
+    .catch((error) => console.log(error));
 });
-app.get("/GetChats/:name", (req, res) => {
+app.post("/Posts", (req, res) => {
+  const user = {
+    accountName: "Jenil_parmar",
+    imgUrl: "hahahahaah",
+    likes: 352,
+    commets: {
+      accountName1: "Hy this is my comments 1",
+      accountName2: "Hy this is my comments 2",
+    },
+  };
+  db.collection("Posts")
+    .insertOne(user)
+    .then((data) => {
+      console.log(data);
+      res.send("Haa post me save ho gaya ");
+    })
+    .catch((error) => console.log(error));
+});
+
+app.get("/PostData/:name", (req, res) => {
   const name = req.params.name;
-
-  UserChat.find({ accountName: name })
-    .then((data) => {
-      if (data.length > 0) {
-        // If there are matching documents, send them as an array
-        res.send(data);
+  
+  db.collection("Posts")
+    .findOne({ accountName: name })  // Query for a document where the 'name' field matches the provided name
+    .then(data => {
+      if (data) {
+        res.json(data);  // Send the found document as a JSON response
       } else {
-        // If no matching documents are found, send a message
-        res.status(404).send("Nothing to show. Start a new chat.");
+        res.status(404).send('No document found with the given name');  // Handle case where no document is found
       }
     })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send("Error retrieving data from the database");
+    .catch(e => {
+      console.error('Error fetching data', e);
+      res.status(500).send('Error fetching data');  // Handle potential errors
     });
 });
-app.get("/GetComments/:name", (req, res) => {
-  const name = req.params.name;
-  userAccountModel.findOne({accountName:name}).then((data)=>{
-    res.send(data)
-  }).catch((err)=>{
-    res.send(err);
-  })
+app.get("/GetAllPosts", (req, res) => {
+  db.collection("Posts")
+    .find({})
+    .toArray()
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data', error);
+      res.status(500).send('Error fetching data');
+    });
 });
+app.get('/search/:name',(req,res)=>{
+  const name = req.params.name;
+  db.collection("Users")
+  .findOne({accountName:name})
+  .then(data=>{
+    res.send(data)
+  })
+  .catch(e=>{
+    res.send(e)
+  })
+})
 
-
-
-
-////////////////////////Like Buttons//////////////////////////
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {
     1: getImageL1(),
@@ -157,7 +109,8 @@ app.get("/GetLikeButtons", (req, res) => {
   res.send(likesObj);
 });
 
-///////////////////////////////Routing Work/////////////////////
+
+
 app.get("/api", (req, res) => {
   res.json({
     message: {

@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import ComentsContext from "../myContext";
+
 import Post from "./Post";
 
 export default function Scrollpage({
-  isDarkMode,
   active,
   handleCommentBox,
   commentActive,
-  setViewComments
 }) {
   const [posts, setPosts] = useState([]);
-const [name,setName]= useState("");
-const handleNameForComment=(naaam)=>{
-  setName(naaam)
-}
-
 
   const blurClass = "blur";
 
   useEffect(() => {
-    fetch("/PostData")
+    fetch("/GetAllPosts")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok");
@@ -26,31 +21,14 @@ const handleNameForComment=(naaam)=>{
         return res.json();
       })
       .then((data) => {
-        // console.log(data[0]['comment']);
-        console.log(posts);
-       
+        // console.log(data);
+
         setPosts(data); // Update state with fetched data
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []); // Empty dependency array ensures useEffect runs only once
-  useEffect(()=>{
-    fetch(`/GetComments/${name}`)
-    .then((res)=>{
-        return res.json();
-    })
-    .then((data)=>{
-      setViewComments(data)
-      console.log(data);
-    }).catch((err)=>{
-      console.log(err);
-    })
-  },[commentActive])
-
-
-
-
 
   return (
     <>
@@ -64,12 +42,11 @@ const handleNameForComment=(naaam)=>{
         {posts.map((post) => (
           <Post
             handleCommentBox={handleCommentBox}
-            // commentActive={commentActive}
+            commentActive={commentActive}
             name={post.accountName}
             date={post.date}
-            img={post["post"]}
-            handleNameForComment={handleNameForComment}  
-          /> // Assuming "accountName" is the correct property
+            img={post['imgUrl']}
+          />
         ))}
       </div>
     </>

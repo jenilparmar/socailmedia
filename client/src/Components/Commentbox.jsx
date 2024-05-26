@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import ComentsContext from "../myContext"; // Import the ComentsContext
 
-export default function Commentbox({
-  handleCommentBox,
-  setViewComments,
-  viewComments,
-}) {
-  const [comments, setComments] = useState([]);
-
-  const handleSetComments = (array) => {
-    setComments(array);
-  };
+export default function Commentbox() {
+  const { name, setCommentActive } = useContext(ComentsContext);
+  const [comment, setComment] = useState([]);
 
   const handleClickForComment = () => {
-    handleCommentBox();
+    setCommentActive(true);
   };
 
   useEffect(() => {
-    if (viewComments != null) {
-      const array = Object.values(viewComments["comment"]);
-      handleSetComments(array);
-    }
-  }, [viewComments]);
+    fetch(`/PostData/${name}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.commets) {
+          setComment(Object.values(data.commets));
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching comments:', error);
+      });
+  }, [name]);
 
   return (
     <div className="flex flex-col absolute w-80 mx-2 overflow-auto h-screen right-0">
@@ -32,25 +32,25 @@ export default function Commentbox({
         onClick={handleClickForComment}
       ></i>
 
-      {/* Render comments dynamically */}
-      {comments.map((elem, index) => (
-        <div key={index} className="whitespace-normal text-red-500 bg-black max-w-80 h-fit my-2 text-xs">
-          {elem['commentText']}
-        </div>
-      ))}
+      <div className="comm text-white flex flex-col z-20 mt-10">
+        {comment.map((e, index) => (
+          <div className="text-red-500 z-20" key={index}>
+            {e}
+          </div>
+        ))}
+      </div>
 
-      <div className="comm"></div>
-      <div className="flex flex-row justify-center -mx-8 fixed right-56 z-30">
+      <div className="flex flex-row justify-center gap-3 -mx-8 fixed right-16 z-30 bottom-3">
         <input
           type="text"
           placeholder="comment"
-          className="text bg-black border-color-white fixed rounded-md w-56 focus:text-white visited:text-white target:text-white border-0 bottom-3"
+          className="text bg-black border-color-white rounded-md w-56 focus:text-white visited:text-white target:text-white border-0"
           style={{
             borderBottom: "2px #3d3a3a solid",
           }}
         />
         <button
-          className="w-8 h-8 fixed right-5 bottom-3 hover:bg-blue-700 text-black border-color-blue-700"
+          className="w-8 h-8 hover:bg-blue-700 text-black border-color-blue-700"
           style={{
             borderRadius: "50%",
             border: "2px solid #3d3a3a",

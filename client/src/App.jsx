@@ -1,52 +1,67 @@
-  import React, { useEffect, useState } from 'react';
-  import './App.css';
-  import Navbar from './Components/Navbar';
-  import Scrollpage from './Components/Scrollpage';
-  import Inbox from './Components/Inbox';
-  import SearchBox from './Components/SearchBox';
-  import Notification from './Components/Notification';
-  import Explorepage from './Components/Explorepage';
-  import AddPost from './Components/AddPost';
-import Profile from './Components/Profile';
-import Commentbox from './Components/Commentbox';
-  // React.useEffect(() => {
-  //   fetch("/PostData")
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data.message));
-  // }, []);
-  export default function App() {
-   
-    const [active, setActive] = useState('Home');
-    const [isDarkMode, setIsDarkMode] = useState(false);
-    const [commentActive , setCommentActive] = useState(true)
-    const [viewComment,setViewComments]= useState(null)
-    const handleViewComments=(object)=>{
-      setViewComments(object)
-    }
-    const handleCommentBox=()=>{
+import React, { useEffect, useState } from "react";
+import ComentsContext from "./myContext"; // Import the ComentsContext
+import "./App.css";
+import Navbar from "./Components/Navbar";
+import Scrollpage from "./Components/Scrollpage";
+import Inbox from "./Components/Inbox";
+import SearchBox from "./Components/SearchBox";
+import Notification from "./Components/Notification";
 
-        setCommentActive(!commentActive)
-    }
-    const handleDarkMode = (mode) => {
-      setIsDarkMode(mode);
-    };
+import AddPost from "./Components/AddPost";
+import Profile from "./Components/Profile";
+import Commentbox from "./Components/Commentbox";
 
-    const handleClick = (navActive) => {
-      setActive(navActive);
-    };
+export default function App() {
+  const [active, setActive] = useState("Home");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [commentActive, setCommentActive] = useState(true);
+  const [ name , setName] = useState("")
 
-    return (
-      <>
-        <div className={`container2 flex flex-row justify-between ${isDarkMode ? 'dark' : 'light'}`}>
-          <Navbar activeFunction={handleClick} darkMode={handleDarkMode} isDarkMode={isDarkMode} />
-          {active === 'Search' && <SearchBox isDarkMode={isDarkMode} />}
-          {active === 'Notification' && <Notification isDarkMode={isDarkMode} />}
-          {active === 'Explore' && active!=="Add Post" ? <Explorepage /> : <Scrollpage active={active} handleCommentBox={handleCommentBox} setViewComments={setViewComments} commentActive = {commentActive}/>}
-          {active === 'Add Post' && active!=="Explore" ? <AddPost activeFunction={handleClick} /> : undefined}
-         
-          {active==="Profile" ? <Profile/>:undefined}
-          {commentActive? <Inbox />:<Commentbox handleCommentBox={handleCommentBox} setViewComments={setViewComments} viewComments={viewComment}/>}
+  const handleCommentBox = () => {
+    setCommentActive(false);
+  };
+  
+  const handleDarkMode = (mode) => {
+    setIsDarkMode(mode);
+  };
+  const handleClick = (navActive) => {
+    setActive(navActive);
+  };
+  return (
+    <>
+      <ComentsContext.Provider value={{setCommentActive,commentActive,setName,name}}> {/* Provide the context value */}
+        <div className={`container2 flex flex-row justify-between ${isDarkMode ? "dark" : "light"}`}>
+          <Navbar
+            activeFunction={handleClick}
+            darkMode={handleDarkMode}
+            isDarkMode={isDarkMode}
+          />
+          {active === "Search" && <SearchBox isDarkMode={isDarkMode} />}
+          {active === "Notification" && <Notification isDarkMode={isDarkMode} />}
+          {active === "Explore" && active !== "Add Post" ? (
+           undefined
+          ) : (
+            <Scrollpage
+              active={active}
+              handleCommentBox={handleCommentBox}
+              commentActive={commentActive}
+            />
+          )}
+
+          {active === "Add Post" && active !== "Explore" ? (
+            <AddPost activeFunction={handleClick} />
+          ) : undefined}
+
+          {active === "Profile" ? <Profile /> : undefined}
+          {commentActive ? (
+            <Inbox />
+          ) : (
+            <Commentbox
+              handleCommentBox={handleCommentBox}
+            />
+          )}
         </div>
-      </>
-    );
-  }
+      </ComentsContext.Provider> {/* Close the context provider */}
+    </>
+  );
+}

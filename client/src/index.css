@@ -237,7 +237,7 @@ input::placeholder{
 input{
 text-align: center;
 }
-.comm{
+/* .comm{
   background-color: black;
   width: 32vw;
   z-index: 20;
@@ -246,4 +246,4 @@ text-align: center;
   right: 0%;
   height: 13vh;
   border-top: 2px solid #3d3a3a;
-}
+} */

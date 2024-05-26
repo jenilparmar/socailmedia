@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function SearchInbox({ setPerson }) {
+export default function SearchInboxForChat({ setPerson }) {
   const [searchValue, setSearchValue] = useState("");
   const handleSetFunction = (name) => {
     setPerson(name);
@@ -11,7 +11,7 @@ export default function SearchInbox({ setPerson }) {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      fetch(`/search/${searchValue}`)
+      fetch(`/searchForChat/${searchValue}`)
         .then((res) => {
           return res.json();
         })
