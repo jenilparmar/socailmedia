@@ -37,7 +37,7 @@ export default function Scrollpage({
           active === "Add Post" ? blurClass : undefined
         }`}>
         <h3>Home</h3>
-        <i className="z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white"></i>
+        <i className="z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white" onClick={()=>{window.location.reload()}}></i>
         {/* Map over posts array and render Post components */}
         {posts.map((post) => (
           <Post

@@ -1,0 +1,29 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
+  <style type="text/css">
+    .st0 {
+      fill: none;
+      stroke: url(#gradient); /* Use gradient stroke */
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+    }
+    .path-animation {
+      stroke-dasharray: 50;
+      stroke-dashoffset: 100;
+      animation: dash 1s linear infinite;
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color: red;" />
+      <stop offset="100%" style="stop-color: blue;" />
+    </linearGradient>
+  </defs>
+  <path class="st0 path-animation" d="M12.7,12.1c-2.4-2.6-7.3-3.2-9.9-0.7s-2.5,6.7,0,9.2s7.4,1.9,9.9-0.7c2.1-2.2,4.5-5.6,6.5-7.8
+    c2.4-2.6,7.4-3.2,9.9-0.7s2.5,6.7,0,9.2s-7.5,1.9-9.9-0.7C17.2,17.7,14.8,14.3,12.7,12.1z"/>
+</svg>

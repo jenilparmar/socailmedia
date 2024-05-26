@@ -48,9 +48,9 @@ export default function App() {
             />
           )}
 
-          {active === "Add Post" && active !== "Explore" ? (
+          {active === "Add Post"  ? (
             <AddPost activeFunction={handleClick} />
-          ) : undefined}
+          ) :undefined}
 
           {active === "Profile" ? <Profile /> : undefined}
           {commentActive ? (

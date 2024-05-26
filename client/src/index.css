@@ -77,10 +77,10 @@ h3{
 .containerAddPost{
   position: fixed;
   left: 18%;
-  top: 36%;
-  height: 37vh;
+  top: 20%;
+  height: 60vh;
   border-radius: 15px;
-  border: 3px white solid;
+  /* border: 3px white solid; */
   filter: drop-shadow(0 0 0.50rem white);
   transition: filter ease-in-out 0.5s;
 
@@ -246,4 +246,34 @@ text-align: center;
   right: 0%;
   height: 13vh;
   border-top: 2px solid #3d3a3a;
-} */
+} */.containerInbox {
+  background-color: black; /* Black background for the container */
+}
+
+.infinity-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.st0 {
+  fill: none;
+  stroke: url(#gradient); /* Use gradient stroke */
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+ 
+}
+
+.path-animation {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: dash 2s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
