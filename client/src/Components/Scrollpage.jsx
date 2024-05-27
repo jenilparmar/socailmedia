@@ -9,7 +9,7 @@ export default function Scrollpage({
   commentActive,
 }) {
   const [posts, setPosts] = useState([]);
-
+  const [user , setUser] = useState("")
   const blurClass = "blur";
 
   useEffect(() => {
@@ -29,7 +29,10 @@ export default function Scrollpage({
         console.error("Error fetching data:", error);
       });
   }, []); // Empty dependency array ensures useEffect runs only once
-
+const {userName} = useContext(ComentsContext)
+useEffect(()=>{
+  setUser(userName)
+},[userName])
   return (
     <>
       <div
@@ -37,6 +40,7 @@ export default function Scrollpage({
           active === "Add Post" ? blurClass : undefined
         }`}>
         <h3>Home</h3>
+        <div className="text-white z-20 ">{user}</div>
         <i className="z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white" onClick={()=>{window.location.reload()}}></i>
         {/* Map over posts array and render Post components */}
         {posts.map((post) => (

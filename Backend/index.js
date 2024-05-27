@@ -23,17 +23,19 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(express.json());
 //////////////////////////////////////////////////////////////////////////////////////////////////
-app.post("/users", (req, res) => {
+app.get("/users/:email", (req, res) => {
+  const email = req.params.email
   const user = {
-    accountName: "David Brown",
-    email: "david.brown@gmail.com",
-    passward: "hashedpassword345",
+   
+    email: email,
+   
   };
   db.collection("Users")
-    .insertOne(user)
+    .findOne(user)
     .then((data) => {
       console.log(data);
-      res.send("Leee bhai");
+      res.send(data)
+      // res.sendStatus(404)
     })
     .catch((error) => console.log(error));
 });
@@ -102,10 +104,9 @@ app.get("/Auth/:email/:passward", (req, res) => {
   db.collection("Users")
     .findOne(
       {
-        email: email,
-      } && {
-        passward: passward,
-      }
+        email: email,passward: passward
+      } 
+   
     )
     .then((data) => {
       if (data) res.send(data);
@@ -115,6 +116,19 @@ app.get("/Auth/:email/:passward", (req, res) => {
     })
     .catch((e) => res.send(e));
 });
+app.get("/Dataentry/:email/:passward/:name",(req,res)=>{
+  const email = req.params.email;
+  const name= req.params.name;
+  const passward  =req.params.passward;
+  db.collection("Users")
+  .insertOne({
+    email:email,
+    accountName:name,
+    passward:passward
+  }).then(data=>res.status(200).send(data))
+  .catch(e=>res.send(e))
+
+})
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {

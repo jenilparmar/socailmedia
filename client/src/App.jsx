@@ -6,7 +6,6 @@ import Scrollpage from "./Components/Scrollpage";
 import Inbox from "./Components/Inbox";
 import SearchBox from "./Components/SearchBox";
 import Notification from "./Components/Notification";
-
 import AddPost from "./Components/AddPost";
 import Profile from "./Components/Profile";
 import Commentbox from "./Components/Commentbox";
@@ -18,6 +17,8 @@ export default function App() {
   const [commentActive, setCommentActive] = useState(true);
   const [name, setName] = useState("");
   const [authenticated , setAuthenticated] = useState(false);
+  const [getSigning, setGetSigning] = useState(false);
+  const [userName , setUserName]  = useState("")
   const handleCommentBox = () => {
     setCommentActive(false);
   };
@@ -26,22 +27,31 @@ export default function App() {
     setIsDarkMode(mode);
   };
   useEffect(() => {
-    const isAuth = localStorage.getItem('isAuthenticated');
-    if (isAuth === 'true') {
+    // Check if the user is authenticated from localStorage
+    const isAuth = localStorage.getItem("isAuthenticated");
+    if (isAuth === "true") {
       setAuthenticated(true);
+      // Retrieve the username from localStorage if authenticated
+      const storedUserName = localStorage.getItem("userName");
+      if (storedUserName) {
+        setUserName(storedUserName);
+      }
     }
   }, []);
+
   const handleClick = (navActive) => {
     setActive(navActive);
   };
   return (
     <>
       <ComentsContext.Provider
-        value={{ setCommentActive, commentActive, setName, name }}>
+        value={{ setCommentActive, commentActive, setName, name ,getSigning ,setGetSigning,userName ,setUserName}}>
         {" "}
         {/* Provide the context value */}
         {!authenticated ? (
-          <AuthenticationPage  setAuthenticated={setAuthenticated}/>
+          <AuthenticationPage  setAuthenticated={setAuthenticated}/> 
+          //  {!false ? (
+          //   <AuthenticationPage  setAuthenticated={setAuthenticated}/>
         ) : (
           <div
             className={`container2 flex flex-row justify-between ${
