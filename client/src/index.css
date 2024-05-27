@@ -222,11 +222,12 @@ html{
 ::-webkit-scrollbar-thumb {
   height: 2px;
   max-height: 2px;
-
-  background: #db0000;
+  background: rgb(150,0,255);
+  background: linear-gradient(180deg, rgba(150,0,255,1) 0%, rgba(232,37,37,1) 97%, rgba(255,0,0,1) 99%);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: red;
+  background: rgb(150,0,255);
+  background: linear-gradient(180deg, rgba(150,0,255,1) 0%, rgba(232,37,37,1) 97%, rgba(255,0,0,1) 99%);
 }
 input::placeholder{
   color: rgb(194, 194, 194);
@@ -276,4 +277,10 @@ text-align: center;
   to {
     stroke-dashoffset: 0;
   }
+}
+i:hover{
+  background: linear-gradient(to top, #f32121, #ffce08,#c350c3, #3c01ff);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  transition: hover 1s ease-in-out
 }

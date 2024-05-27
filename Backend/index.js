@@ -25,9 +25,9 @@ app.use(express.json());
 //////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/users", (req, res) => {
   const user = {
-    accountName: "Jenil parmar",
-    email : "exampleEmail@gmail.com",
-    passward:"hashredvdfkgjg",
+    accountName: "David Brown",
+    email: "david.brown@gmail.com",
+    passward: "hashedpassword345",
   };
   db.collection("Users")
     .insertOne(user)
@@ -58,45 +58,63 @@ app.post("/Posts", (req, res) => {
 
 app.get("/PostData/:name", (req, res) => {
   const name = req.params.name;
-  
+
   db.collection("Posts")
-    .findOne({ accountName: name })  // Query for a document where the 'name' field matches the provided name
-    .then(data => {
+    .findOne({ accountName: name }) // Query for a document where the 'name' field matches the provided name
+    .then((data) => {
       if (data) {
-        res.json(data);  // Send the found document as a JSON response
+        res.json(data); // Send the found document as a JSON response
       } else {
-        res.status(404).send('No document found with the given name');  // Handle case where no document is found
+        res.status(404).send("No document found with the given name"); // Handle case where no document is found
       }
     })
-    .catch(e => {
-      console.error('Error fetching data', e);
-      res.status(500).send('Error fetching data');  // Handle potential errors
+    .catch((e) => {
+      console.error("Error fetching data", e);
+      res.status(500).send("Error fetching data"); // Handle potential errors
     });
 });
 app.get("/GetAllPosts", (req, res) => {
   db.collection("Posts")
     .find({})
     .toArray()
-    .then(data => {
+    .then((data) => {
       res.json(data);
     })
-    .catch(error => {
-      console.error('Error fetching data', error);
-      res.status(500).send('Error fetching data');
+    .catch((error) => {
+      console.error("Error fetching data", error);
+      res.status(500).send("Error fetching data");
     });
 });
-app.get('/search/:name',(req,res)=>{
+app.get("/search/:name", (req, res) => {
   const name = req.params.name;
   db.collection("Users")
-  .findOne({accountName:name})
-  .then(data=>{
-    res.send(data)
-  })
-  .catch(e=>{
-    res.send(e)
-  })
-})
-
+    .findOne({ accountName: name })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((e) => {
+      res.send(e);
+    });
+});
+app.get("/Auth/:email/:passward", (req, res) => {
+  const email = req.params.email;
+  const passward = req.params.passward;
+  db.collection("Users")
+    .findOne(
+      {
+        email: email,
+      } && {
+        passward: passward,
+      }
+    )
+    .then((data) => {
+      if (data) res.send(data);
+      else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((e) => res.send(e));
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {
@@ -108,8 +126,6 @@ app.get("/GetLikeButtons", (req, res) => {
 
   res.send(likesObj);
 });
-
-
 
 app.get("/api", (req, res) => {
   res.json({
