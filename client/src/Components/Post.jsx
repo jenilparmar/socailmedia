@@ -11,7 +11,7 @@ export default function Post({ name, img, handleCommentBox, commentActive }) {
   };
 
   useEffect(() => {
-    fetch("/GetLikeButtons")
+    fetch(`/GetLikeButtons`)
       .then((res) => res.json())
       .then((data) => {
         let array = [];
@@ -19,6 +19,7 @@ export default function Post({ name, img, handleCommentBox, commentActive }) {
           array.push(data[key]);
         });
         setImgArray(array);
+        Object.keys(data)
       })
       .catch((err) => {
         console.log(err);

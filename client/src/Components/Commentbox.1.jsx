@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
-import ComentsContext from "../myContext"; // Import the ComentsContext
+import ComentsContext from "../myContext";
 
 export default function Commentbox() {
   const { name, setCommentActive } = useContext(ComentsContext);
-  const [comment, setComment] = useState([]);cvzx
-  const [commentText , setCommentText] = useState("");
+  const [comment, setComment] = useState([]);
+  const [commentText, setCommentText] = useState("");
   const handleClickForComment = () => {
     setCommentActive(true);
   };
-  const handleComment=()=>{
-      fetch(`/PostComment/${commentText}/${name}`)
-      .then(res=>{return res.json()})
-      .then(data=>alert(data))
-      .catch(e=>console.log(e))
-  }
+  const handleComment = () => {
+    fetch(`/PostComment/${commentText}/${name}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => alert(data))
+      .catch((e) => console.log(e));
+  };
 
   useEffect(() => {
     fetch(`/PostData/${name}`)
@@ -24,7 +26,7 @@ export default function Commentbox() {
         }
       })
       .catch((error) => {
-        console.error('Error fetching comments:', error);
+        console.error("Error fetching comments:", error);
       });
   }, [name]);
 
@@ -35,8 +37,7 @@ export default function Commentbox() {
       </h3>
       <i
         className="fa-solid fa-xmark text-white absolute right-5 top-2 z-20 cursor-pointer"
-        onClick={handleClickForComment}
-      ></i>
+        onClick={handleClickForComment}></i>
 
       <div className="comm text-white flex flex-col z-20 mt-10">
         {comment.map((e, index) => (
@@ -54,9 +55,9 @@ export default function Commentbox() {
           style={{
             borderBottom: "2px #3d3a3a solid",
           }}
-        onChange={(e)=>{
-          setCommentText(e.target.value)
-        }}
+          onChange={(e) => {
+            setCommentText(e.target.value);
+          }}
         />
         <button
           className="w-8 h-8 hover:bg-blue-700 text-black border-color-blue-700"
@@ -64,8 +65,7 @@ export default function Commentbox() {
             borderRadius: "50%",
             border: "2px solid #3d3a3a",
           }}
-          onClick={handleComment}
-        >
+          onClick={handleComment}>
           <i className="fa-solid text-white hover:text-white fa-arrow-up"></i>
         </button>
       </div>

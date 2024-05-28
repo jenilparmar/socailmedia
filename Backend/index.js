@@ -14,7 +14,8 @@ const app = express();
 url = "mongodb://127.0.0.1:27017/SocailMedia";
 const dbName = "MemeMenia";
 let db;
-MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+MongoClient.
+connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((client) => {
     console.log("Connected successfully to MongoDB server");
     db = client.db(dbName);
@@ -22,6 +23,15 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((error) => console.error("MongoDB connection error:", error));
 
 app.use(express.json());
+ function getLikeInfo(acn,pera){
+  db.collection("Posts")
+    .findOne({accountName:acn})
+    .then(data=>{
+      
+      return data['likes'][pera]
+    })
+    .catch(e=>{return e})
+  }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/users/:email", (req, res) => {
   const email = req.params.email
@@ -41,9 +51,14 @@ app.get("/users/:email", (req, res) => {
 });
 app.post("/Posts", (req, res) => {
   const user = {
-    accountName: "Jenil_parmar",
-    imgUrl: "hahahahaah",
-    likes: 352,
+    accountName: "Darko",
+    imgUrl: "lelelelelele",
+    likes: {
+      p1 :12,
+      p2 : 24,
+      p3:41,
+      p4:23,
+    },
     commets: {
       accountName1: "Hy this is my comments 1",
       accountName2: "Hy this is my comments 2",
@@ -128,6 +143,19 @@ app.get("/Dataentry/:email/:passward/:name",(req,res)=>{
   }).then(data=>res.status(200).send(data))
   .catch(e=>res.send(e))
 
+})
+app.get("/ForgotPass/:email",(req,res)=>{
+  const email = req.params.email;
+  db.collection("Users")
+  .findOne({email:email})
+  .then(data=>res.send(data["passward"]))
+  .catch(e=>res.send(e));
+})
+app.get("/PostComment/:text/:name",(req,res)=>{
+  const text = req.params.text;
+  const name = req.params.name;
+  db.collection("Posts")
+  .findOne
 })
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {

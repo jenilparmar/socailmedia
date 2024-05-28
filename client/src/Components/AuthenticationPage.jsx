@@ -119,7 +119,7 @@ export default function AuthenticationPage({ setAuthenticated }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div className="cursor-pointer text-xs text-right relative right-10 hover:text-blue-700 text-white">
+            <div className="cursor-pointer text-xs text-right relative right-10 hover:text-blue-700 text-white" >
               Forgot password?
             </div>
             <div
