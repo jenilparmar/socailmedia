@@ -19,6 +19,7 @@ export default function App() {
   const [authenticated , setAuthenticated] = useState(false);
   const [getSigning, setGetSigning] = useState(false);
   const [userName , setUserName]  = useState("")
+  const [id,setID]  = useState("")
   const handleCommentBox = () => {
     setCommentActive(false);
   };
@@ -45,7 +46,7 @@ export default function App() {
   return (
     <>
       <ComentsContext.Provider
-        value={{ setCommentActive, commentActive, setName, name ,getSigning ,setGetSigning,userName ,setUserName}}>
+        value={{ setCommentActive, commentActive,id,setID, setName, name ,getSigning ,setGetSigning,userName ,setUserName}}>
         {" "}
         {/* Provide the context value */}
         {!authenticated ? (

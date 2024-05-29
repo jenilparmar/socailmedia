@@ -50,6 +50,7 @@ useEffect(()=>{
             name={post.accountName}
             date={post.date}
             img={post['imgUrl']}
+            id={post['_id']}
           />
         ))}
       </div>

@@ -1,15 +1,36 @@
 import React, { useEffect, useState, useContext } from "react";
 import ComentsContext from "../myContext";
 
-export default function Post({ name, img, handleCommentBox, commentActive }) {
+export default function Post({ name, img, handleCommentBox, id,commentActive }) {
   const [imgArray, setImgArray] = useState([]);
-  const {setName} = useContext(ComentsContext)
+  const { setName } = useContext(ComentsContext);
+  const {setID}  = useContext(ComentsContext)
   const handleClickForComment = (name) => {
     handleCommentBox();
-  setName(name)
-
+    setName(name);
+    setID(id)
   };
-
+  const handleLiking = (id, groupIndex, index) => {
+    let parameter = "";
+    if (groupIndex === 0 && index === 0) parameter = "p1";
+    else if (groupIndex === 0 && index === 1) parameter = "p2";
+    else if (groupIndex === 1 && index === 0) parameter = "p3";
+    else if (groupIndex === 1 && index === 1) parameter = "p4";
+  
+    fetch(`/AddLike/${id}/${parameter}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse response JSON
+      })
+      .then(data => {
+        console.log(data); // Log parsed response data
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+  };
   useEffect(() => {
     fetch(`/GetLikeButtons`)
       .then((res) => res.json())
@@ -19,14 +40,13 @@ export default function Post({ name, img, handleCommentBox, commentActive }) {
           array.push(data[key]);
         });
         setImgArray(array);
-        Object.keys(data)
+        Object.keys(data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // Group the imgArray into sub-arrays of two items each
   const groupedImgArray = [];
   for (let i = 0; i < imgArray.length; i += 2) {
     groupedImgArray.push(imgArray.slice(i, i + 2));
@@ -68,7 +88,8 @@ export default function Post({ name, img, handleCommentBox, commentActive }) {
                           backgroundSize: "contain",
                           backgroundPosition: "center",
                           backgroundRepeat: "no-repeat",
-                        }}></div>
+                        }}
+                        onClick={() => handleLiking(id,groupIndex,index)}></div>
                       <div className="self-center text-gray-700 text-sm">
                         {"25%"}
                       </div>
@@ -79,7 +100,7 @@ export default function Post({ name, img, handleCommentBox, commentActive }) {
             </div>
             <div
               className="text-white cursor-pointer text-sm mx-3 hover:text-blue-700"
-              onClick={()=>handleClickForComment(name)}>
+              onClick={() => handleClickForComment(name)}>
               See comments
             </div>
           </div>

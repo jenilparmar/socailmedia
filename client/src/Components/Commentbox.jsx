@@ -1,30 +1,41 @@
 import React, { useEffect, useState, useContext } from "react";
-import ComentsContext from "../myContext"; // Import the ComentsContext
+import ComentsContext from "../myContext";
 
 export default function Commentbox() {
   const { name, setCommentActive } = useContext(ComentsContext);
-  const [comment, setComment] = useState([]);cvzx
-  const [commentText , setCommentText] = useState("");
+  const [comment, setComment] = useState([]);
+  const [commentText, setCommentText] = useState("");
   const handleClickForComment = () => {
     setCommentActive(true);
   };
-  const handleComment=()=>{
-      fetch(`/PostComment/${commentText}/${name}`)
-      .then(res=>{return res.json()})
-      .then(data=>alert(data))
-      .catch(e=>console.log(e))
-  }
+  const handleSendComment = () => {
+    fetch(`/PostComment/${id["id"]}/${commentText}`)
+      .then((data) => {
+        console.log(data);       
+          let i = document.getElementById('input')// Clear the input field after 
+          i.value = ""
+          setComment((prevComments) => [...prevComments, commentText]);
+          console.log("I have come fomr sendcom");
+      })
+      .catch((error) => {
+        console.error("Error posting comment:", error);
+      });
+  };
+  
+
+  const id = useContext(ComentsContext);
 
   useEffect(() => {
     fetch(`/PostData/${name}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.commets) {
-          setComment(Object.values(data.commets));
+        if (data && data.comments) {
+          setComment(Object.values(data.comments));
+         console.log("ui hajhshdf");
         }
       })
       .catch((error) => {
-        console.error('Error fetching comments:', error);
+        console.error("Error fetching comments:", error);
       });
   }, [name]);
 
@@ -35,28 +46,31 @@ export default function Commentbox() {
       </h3>
       <i
         className="fa-solid fa-xmark text-white absolute right-5 top-2 z-20 cursor-pointer"
-        onClick={handleClickForComment}
-      ></i>
+        onClick={handleClickForComment}></i>
 
       <div className="comm text-white flex flex-col z-20 mt-10">
-        {comment.map((e, index) => (
-          <div className="text-red-500 z-20" key={index}>
-            {e}
-          </div>
-        ))}
+        {comment
+          .slice()
+          .reverse()
+          .map((e, index) => (
+            <div className="text-red-500 z-20" key={index}>
+              {e}
+            </div>
+          ))}
       </div>
 
       <div className="flex flex-row justify-center gap-3 -mx-8 fixed right-16 z-30 bottom-3">
         <input
           type="text"
           placeholder="comment"
-          className="text bg-black border-color-white rounded-md w-56 focus:text-white visited:text-white target:text-white border-0"
+          id="input"
+          className="text bg-black text-white border-color-white rounded-md w-56 focus:text-white visited:text-white target:text-white border-0"
           style={{
             borderBottom: "2px #3d3a3a solid",
           }}
-        onChange={(e)=>{
-          setCommentText(e.target.value)
-        }}
+          onChange={(e) => {
+            setCommentText(e.target.value);
+          }}
         />
         <button
           className="w-8 h-8 hover:bg-blue-700 text-black border-color-blue-700"
@@ -64,9 +78,10 @@ export default function Commentbox() {
             borderRadius: "50%",
             border: "2px solid #3d3a3a",
           }}
-          onClick={handleComment}
-        >
-          <i className="fa-solid text-white hover:text-white fa-arrow-up"></i>
+          onClick={handleSendComment}>
+          <i
+            className="fa-solid text-white hover:text-white fa-arrow-up"
+           ></i>
         </button>
       </div>
     </div>

@@ -51,7 +51,7 @@ app.get("/users/:email", (req, res) => {
 });
 app.post("/Posts", (req, res) => {
   const user = {
-    accountName: "Darko",
+    accountName: "pangoose",
     imgUrl: "lelelelelele",
     likes: {
       p1 :12,
@@ -151,12 +151,60 @@ app.get("/ForgotPass/:email",(req,res)=>{
   .then(data=>res.send(data["passward"]))
   .catch(e=>res.send(e));
 })
-app.get("/PostComment/:text/:name",(req,res)=>{
+app.get("/PostComment/:id/:text", (req, res) => {
+  const id = req.params.id;
   const text = req.params.text;
-  const name = req.params.name;
+
+  try {
+    const objectId = new ObjectId(id);
+
+    db.collection("Posts")
+      .updateOne(
+        { _id: objectId },
+        { $push: { comments: text } }
+      )
+      .then((result) => {
+        if (result.modifiedCount > 0) {
+          res.send("Comment added successfully");
+        } else {
+          res.status(404).send("Post not found");
+        }
+      })
+      .catch((e) => {
+        console.error("Error updating post comments:", e);
+        res.status(500).send("Internal Server Error");
+      });
+  } catch (error) {
+    console.error("Invalid ID format:", error);
+    res.status(400).send("Invalid ID format");
+  }
+});
+
+
+app.get("/Addlike/:id/:pera",(req,res)=>{
+  const id = req.params.id;
+  const pera = req.params.pera;
+
   db.collection("Posts")
-  .findOne
-})
+    .updateOne(
+      { _id: ObjectId(id) }, // Filter by the post's ObjectId
+      { $inc: { ["likes." + pera]: 1 } } // Increment the likes by 1 for the specified pera
+    )
+    .then(result => {
+      // Check if the update was successful
+      if (result.modifiedCount > 0) {
+        res.send("Like added successfully");
+      } else {
+        res.status(404).send("Post not found");
+      }
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error("Error updating like:", error);
+      res.status(500).send("Internal server error");
+    });
+});
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {
