@@ -217,7 +217,7 @@ html{
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #121111;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   height: 2px;
@@ -283,4 +283,23 @@ i:hover{
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   transition: hover 1s ease-in-out
+}
+
+.over{
+  width: 32vw;
+  height: 12vh;
+  position: fixed;
+  top: 88%;
+  background-color: #000;
+  right: 0%;
+}
+
+.over2{
+  width: 32vw;
+  height: 12vh;
+  position: fixed;
+  top:-4%;
+  background-color: #000;
+  right: 0%;
+  z-index: 20;
 }

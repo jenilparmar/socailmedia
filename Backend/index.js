@@ -51,7 +51,7 @@ app.get("/users/:email", (req, res) => {
 });
 app.post("/Posts", (req, res) => {
   const user = {
-    accountName: "pangoose",
+    accountName: "jenil bro",
     imgUrl: "lelelelelele",
     likes: {
       p1 :12,
@@ -187,7 +187,7 @@ app.get("/Addlike/:id/:pera",(req,res)=>{
 
   db.collection("Posts")
     .updateOne(
-      { _id: ObjectId(id) }, // Filter by the post's ObjectId
+      { _id:new ObjectId(id) }, // Filter by the post's ObjectId
       { $inc: { ["likes." + pera]: 1 } } // Increment the likes by 1 for the specified pera
     )
     .then(result => {

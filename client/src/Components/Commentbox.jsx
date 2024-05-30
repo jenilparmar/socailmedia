@@ -11,11 +11,11 @@ export default function Commentbox() {
   const handleSendComment = () => {
     fetch(`/PostComment/${id["id"]}/${commentText}`)
       .then((data) => {
-        console.log(data);       
+        // console.log(data);       
           let i = document.getElementById('input')// Clear the input field after 
           i.value = ""
           setComment((prevComments) => [...prevComments, commentText]);
-          console.log("I have come fomr sendcom");
+          // console.log("I have come fomr sendcom");
       })
       .catch((error) => {
         console.error("Error posting comment:", error);
@@ -31,7 +31,7 @@ export default function Commentbox() {
       .then((data) => {
         if (data && data.comments) {
           setComment(Object.values(data.comments));
-         console.log("ui hajhshdf");
+        //  console.log("ui hajhshdf");
         }
       })
       .catch((error) => {
@@ -41,25 +41,25 @@ export default function Commentbox() {
 
   return (
     <div className="flex flex-col absolute w-80 mx-2 overflow-auto h-screen right-0">
-      <h3 className="-mx-0 my-0 bg-black text-white z-20 fixed w-full">
+      <h3 className="-mx-0 my-0 bg-black text-white z-30 fixed w-full">
         Comments
       </h3>
       <i
-        className="fa-solid fa-xmark text-white absolute right-5 top-2 z-20 cursor-pointer"
+        className="fa-solid fa-xmark text-white fixed right-5 top-2 z-30 cursor-pointer"
         onClick={handleClickForComment}></i>
-
-      <div className="comm text-white flex flex-col z-20 mt-10">
+      <div className="over2"></div>
+      <div className="comm text-white text-wrap flex flex-col z-20 mt-10">
         {comment
           .slice()
           .reverse()
           .map((e, index) => (
-            <div className="text-red-500 z-20" key={index}>
+            <div className="text-white z-20 h-fit text-sm hover:bg-gray-900 indent-4 hover:opacity-95" key={index}>
               {e}
             </div>
           ))}
       </div>
-
-      <div className="flex flex-row justify-center gap-3 -mx-8 fixed right-16 z-30 bottom-3">
+          <div className="over z-30"></div>
+      <div className="flex flex-row justify-center gap-3 -mx-8  fixed right-16 z-40 bottom-3">
         <input
           type="text"
           placeholder="comment"

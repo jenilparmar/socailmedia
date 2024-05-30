@@ -21,8 +21,9 @@ export default function Scrollpage({
         return res.json();
       })
       .then((data) => {
-        // console.log(data);
-
+        console.log(data);
+        // let likes  = data[0]["likes"]
+        // console.log(likes);
         setPosts(data); // Update state with fetched data
       })
       .catch((error) => {
@@ -51,6 +52,7 @@ useEffect(()=>{
             date={post.date}
             img={post['imgUrl']}
             id={post['_id']}
+            likesCount={post['likes']}
           />
         ))}
       </div>

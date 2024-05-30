@@ -1,36 +1,55 @@
 import React, { useEffect, useState, useContext } from "react";
 import ComentsContext from "../myContext";
 
-export default function Post({ name, img, handleCommentBox, id,commentActive }) {
+export default function Post({
+  name,
+  img,
+  handleCommentBox,
+  id,
+  commentActive,
+  likesCount
+}) {
   const [imgArray, setImgArray] = useState([]);
   const { setName } = useContext(ComentsContext);
-  const {setID}  = useContext(ComentsContext)
+  const { setID } = useContext(ComentsContext);
+const [LIKECOUNT, SETLIKECOUNT]  = useState(likesCount)
   const handleClickForComment = (name) => {
     handleCommentBox();
     setName(name);
-    setID(id)
+    setID(id);
   };
+  let total =0;
+  let a = Object.values(LIKECOUNT);
+a.forEach(e=>{
+  total+=e;
+})
+// console.log(likesCount);
+
   const handleLiking = (id, groupIndex, index) => {
+total = 0
+    let a = Object.values(LIKECOUNT);
+a.forEach(e=>{
+  total+=e;
+})
     let parameter = "";
     if (groupIndex === 0 && index === 0) parameter = "p1";
     else if (groupIndex === 0 && index === 1) parameter = "p2";
     else if (groupIndex === 1 && index === 0) parameter = "p3";
     else if (groupIndex === 1 && index === 1) parameter = "p4";
-  
+
     fetch(`/AddLike/${id}/${parameter}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Parse response JSON
+      .then((data) => {
+        SETLIKECOUNT((prevLikesCount) => {
+          const updatedLikesCount = { ...prevLikesCount };
+          updatedLikesCount[parameter] += 1;
+          return updatedLikesCount;
+        });
       })
-      .then(data => {
-        console.log(data); // Log parsed response data
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
       });
   };
+
   useEffect(() => {
     fetch(`/GetLikeButtons`)
       .then((res) => res.json())
@@ -40,7 +59,6 @@ export default function Post({ name, img, handleCommentBox, id,commentActive }) 
           array.push(data[key]);
         });
         setImgArray(array);
-        Object.keys(data);
       })
       .catch((err) => {
         console.log(err);
@@ -59,25 +77,17 @@ export default function Post({ name, img, handleCommentBox, id,commentActive }) 
           {img}
         </div>
         <div className="description bg-black-700 w-2/5 text-white h-72 self-center">
-          <div
-            className="flex flex-row h-10"
-            style={{ borderBottom: "0.2vh solid #3d3a3a" }}>
-            <div
-              className="bg-white mx-2 self-center w-7 h-7"
-              style={{ borderRadius: "50%" }}></div>
+          <div className="flex flex-row h-10" style={{ borderBottom: "0.2vh solid #3d3a3a" }}>
+            <div className="bg-white mx-2 self-center w-7 h-7" style={{ borderRadius: "50%" }}></div>
             <div className="self-center">{name}</div>
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-xs indent-3 max-h-6">
-              {
-                "HI i am a sample discriptiohn it will be a great app and website though"
-              }
+              {"HI i am a sample discriptiohn it will be a great app and website though"}
             </div>
             <div className="flex flex-col gap-2 my-3">
               {groupedImgArray.map((group, groupIndex) => (
-                <div
-                  className="flex flex-row justify-center gap-2"
-                  key={groupIndex}>
+                <div className="flex flex-row justify-center gap-2" key={groupIndex}>
                   {group.map((imgUrl, index) => (
                     <div className="flex flex-row gap-2" key={index}>
                       <div
@@ -89,18 +99,17 @@ export default function Post({ name, img, handleCommentBox, id,commentActive }) 
                           backgroundPosition: "center",
                           backgroundRepeat: "no-repeat",
                         }}
-                        onClick={() => handleLiking(id,groupIndex,index)}></div>
-                      <div className="self-center text-gray-700 text-sm">
-                        {"25%"}
+                        onClick={() => handleLiking(id, groupIndex, index)}>
+                      </div>
+                      <div className="self-center text-gray-700 text-xs">
+                        {`${((LIKECOUNT[`p${groupIndex * 2 + index + 1}`] / total) * 100).toFixed(0)}%`}
                       </div>
                     </div>
                   ))}
                 </div>
               ))}
             </div>
-            <div
-              className="text-white cursor-pointer text-sm mx-3 hover:text-blue-700"
-              onClick={() => handleClickForComment(name)}>
+            <div className="text-white cursor-pointer text-sm mx-3 hover:text-blue-700" onClick={() => handleClickForComment(name)}>
               See comments
             </div>
           </div>
