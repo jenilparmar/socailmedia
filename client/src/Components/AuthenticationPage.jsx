@@ -30,6 +30,7 @@ export default function AuthenticationPage({ setAuthenticated }) {
             })
             .then((data) => {
               console.log(data)
+              localStorage.setItem('useName',data["accountName"])
               setUserName(data["accountName"])
             })
             .catch((e) => {

@@ -35,8 +35,9 @@ export default function App() {
     if (isAuth === "true") {
       setAuthenticated(true);
       // Retrieve the username from localStorage if authenticated
-      const storedUserName = localStorage.getItem("userName");
+      const storedUserName = localStorage.getItem("useName");
       if (storedUserName) {
+        console.log(userName);
         setUserName(storedUserName);
       }
     }
@@ -57,16 +58,14 @@ export default function App() {
           //   <AuthenticationPage  setAuthenticated={setAuthenticated}/>
         ) : (
           <div
-            className={`container2 flex flex-row justify-between ${
-              isDarkMode ? "dark" : "light"
-            }`}>
+            className={`container2 flex flex-row bg-black justify-between `}>
             <Navbar
               activeFunction={handleClick}
               darkMode={handleDarkMode}
               isDarkMode={isDarkMode}
             />
         
-            {active === "Search" && <SearchBox isDarkMode={isDarkMode} />}
+            {active === "Search" && <SearchBox isDarkMode={isDarkMode} handleClick={handleClick}/>}
             {active === "Notification" && (
               <Notification isDarkMode={isDarkMode} />
             )}

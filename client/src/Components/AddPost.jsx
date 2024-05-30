@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import ComentsContext from "../myContext";
 
 export default function AddPost({ activeFunction }) {
   const [isUploaded, setIsUploaded] = useState(false);
@@ -8,7 +9,7 @@ export default function AddPost({ activeFunction }) {
   const handleClick = (navItem) => {
     return () => activeFunction(navItem);
   };
-
+const useName = useContext(ComentsContext)
   const handleUpload = (event) => {
     const file = event.target.files[0]; // Get the uploaded file
     if (file) {
@@ -33,7 +34,7 @@ export default function AddPost({ activeFunction }) {
     fetch("/Posts", {
       method: "POST",
       body: JSON.stringify({
-        accountName: "jenil bhai",
+        accountName: useName['userName'],
         imgUrl: filePreview,
         likes: {
           p1: 0,

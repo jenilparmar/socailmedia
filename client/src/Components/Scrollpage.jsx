@@ -21,7 +21,7 @@ export default function Scrollpage({
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // let likes  = data[0]["likes"]
         // console.log(likes);
         setPosts(data); // Update state with fetched data
@@ -41,7 +41,7 @@ useEffect(()=>{
           active === "Add Post" ? blurClass : undefined
         }`}>
         <h3>Home</h3>
-        <div className="text-white z-20 ">{user}</div>
+        <div className="text-white z-20 absolute right-10 top-5">𝐻𝑒𝓁𝓁𝑜 {user}!!</div>
         <i className="z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white" onClick={()=>{window.location.reload()}}></i>
         {/* Map over posts array and render Post components */}
         {posts.slice().reverse().map((post) => (

@@ -8,30 +8,30 @@ export default function Post({
   id,
   commentActive,
   likesCount,
-  caption
+  caption,
 }) {
   const [imgArray, setImgArray] = useState([]);
   const { setName } = useContext(ComentsContext);
   const { setID } = useContext(ComentsContext);
-const [LIKECOUNT, SETLIKECOUNT]  = useState(likesCount)
+  const [LIKECOUNT, SETLIKECOUNT] = useState(likesCount);
   const handleClickForComment = (name) => {
     handleCommentBox();
     setName(name);
     setID(id);
   };
-  let total =0;
+  let total = 0;
   let a = Object.values(LIKECOUNT);
-a.forEach(e=>{
-  total+=e;
-})
-// console.log(likesCount);
+  a.forEach((e) => {
+    total += e;
+  });
+  // console.log(likesCount);
 
   const handleLiking = (id, groupIndex, index) => {
-total = 0
+    total = 0;
     let a = Object.values(LIKECOUNT);
-a.forEach(e=>{
-  total+=e;
-})
+    a.forEach((e) => {
+      total += e;
+    });
     let parameter = "";
     if (groupIndex === 0 && index === 0) parameter = "p1";
     else if (groupIndex === 0 && index === 1) parameter = "p2";
@@ -74,26 +74,36 @@ a.forEach(e=>{
   return (
     <div className="post-container flex flex-col bg-black">
       <div className="containerPost flex flex-row w-full h-80 self-center">
-        <div className="post bg-black w-3/5 h-72 self-center text-black"style={{
-          backgroundImage:`url(${img})`,
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}>
-          
-        </div>
+        <div
+          className="post bg-black w-3/5 h-72 self-center text-black"
+          style={{
+            backgroundImage: `url(${img})`,
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            border: "0.2vh solid #3d3a3a",
+          }}></div>
         <div className="description bg-black-700 w-2/5 text-white h-72 self-center">
-          <div className="flex flex-row h-10" style={{ borderBottom: "0.2vh solid #3d3a3a" }}>
-            <div className="bg-white mx-2 self-center w-7 h-7" style={{ borderRadius: "50%" }}></div>
-            <div className="self-center">{name}</div>
+          <div
+            className="flex flex-row h-10"
+            style={{
+              borderBottom: "0.2vh solid #3d3a3a",
+              borderTop: "0.2vh solid #3d3a3a ",
+            }}>
+            <div
+              className="bg-white mx-2 self-center w-7 h-7"
+              style={{ borderRadius: "50%" }}></div>
+            <div className="self-center" style={{}}>
+              {name}
+            </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-xs indent-3 max-h-6">
-              {caption}
-            </div>
-            <div className="flex flex-col gap-2 my-3">
+            <div className="text-xs indent-3 max-h-6">{caption}</div>
+            <div className="flex flex-col gap-2 ">
               {groupedImgArray.map((group, groupIndex) => (
-                <div className="flex flex-row justify-center gap-2" key={groupIndex}>
+                <div
+                  className="flex flex-row justify-center gap-2"
+                  key={groupIndex}>
                   {group.map((imgUrl, index) => (
                     <div className="flex flex-row gap-2" key={index}>
                       <div
@@ -105,17 +115,24 @@ a.forEach(e=>{
                           backgroundPosition: "center",
                           backgroundRepeat: "no-repeat",
                         }}
-                        onClick={() => handleLiking(id, groupIndex, index)}>
-                      </div>
-                      <div className="self-center text-gray-700 text-xs">
-                        {`${((LIKECOUNT[`p${groupIndex * 2 + index + 1}`] / total) * 100).toFixed(0)}%`}
+                        onClick={() =>
+                          handleLiking(id, groupIndex, index)
+                        }></div>
+                      <div className="self-center text-gray-400 text-xs">
+                        {`${(
+                          (LIKECOUNT[`p${groupIndex * 2 + index + 1}`] /
+                            total) *
+                          100
+                        ).toFixed(0)}%`}
                       </div>
                     </div>
                   ))}
                 </div>
               ))}
             </div>
-            <div className="text-white cursor-pointer text-sm mx-3 hover:text-blue-700" onClick={() => handleClickForComment(name)}>
+            <div
+              className="text-white cursor-pointer text-sm mx-3 hover:text-blue-700"
+              onClick={() => handleClickForComment(name)}>
               See comments
             </div>
           </div>

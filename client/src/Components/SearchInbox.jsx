@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function SearchInbox({ setPerson }) {
+export default function SearchInbox({ setPerson ,setInfo}) {
   const [searchValue, setSearchValue] = useState("");
   const handleSetFunction = (name) => {
     setPerson(name);
@@ -18,7 +18,9 @@ export default function SearchInbox({ setPerson }) {
         .then((data) => {
           console.log(data);
           if(data==null)  handleSetFunction(null);
-          else handleSetFunction(data);
+          else {handleSetFunction(data);
+            setInfo(data)
+          }
         })
         .catch((e) => {
           console.log(e);
