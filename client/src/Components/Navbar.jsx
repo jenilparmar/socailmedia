@@ -27,9 +27,7 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
           className={`fa-solid fa-magnifying-glass text-${color} justify-center self-center`}
           onClick={() => handleClick("Search")}></i>
 
-        <i
-          className={`fa-regular fa-bell text-${color} justify-center self-center`}
-          onClick={() => handleClick("Notification")}></i>
+      
         <i
           className={`fa-solid fa-plus text-${color} justify-center self-center`}
           onClick={() => handleClick("Add Post")}></i>

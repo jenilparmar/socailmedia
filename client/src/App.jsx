@@ -10,6 +10,7 @@ import AddPost from "./Components/AddPost";
 import Profile from "./Components/Profile";
 import Commentbox from "./Components/Commentbox";
 import AuthenticationPage from "./Components/AuthenticationPage";
+import ProfileVisit from "./Components/ProfileVisit";
 
 export default function App() {
   const [active, setActive] = useState("Home");
@@ -20,6 +21,7 @@ export default function App() {
   const [getSigning, setGetSigning] = useState(false);
   const [userName , setUserName]  = useState("")
   const [id,setID]  = useState("")
+  let flag = false;
   const handleCommentBox = () => {
     setCommentActive(false);
   };
@@ -63,6 +65,7 @@ export default function App() {
               darkMode={handleDarkMode}
               isDarkMode={isDarkMode}
             />
+        
             {active === "Search" && <SearchBox isDarkMode={isDarkMode} />}
             {active === "Notification" && (
               <Notification isDarkMode={isDarkMode} />

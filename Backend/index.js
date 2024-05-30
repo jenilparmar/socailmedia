@@ -104,7 +104,7 @@ app.get("/GetAllPosts", (req, res) => {
 });
 app.get("/search/:name", (req, res) => {
   const name = req.params.name;
-  db.collection("Users")
+  db.collection("FindUser")
     .findOne({ accountName: name })
     .then((data) => {
       res.send(data);
@@ -204,6 +204,19 @@ app.get("/Addlike/:id/:pera",(req,res)=>{
       res.status(500).send("Internal server error");
     });
 });
+app.get('/findUser/:name',(req,res)=>{
+  const name = req.params.name;
+  db.collection('FindUser')
+  .insertOne({
+    accountName : name
+  })
+  .then(data=>{
+    res.send("successfully added")
+  })
+  .catch(e=>{
+    console.log(e);
+  })
+})
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {

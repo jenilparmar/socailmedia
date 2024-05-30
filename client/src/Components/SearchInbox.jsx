@@ -18,7 +18,7 @@ export default function SearchInbox({ setPerson }) {
         .then((data) => {
           console.log(data);
           if(data==null)  handleSetFunction(null);
-          else handleSetFunction(data["accountName"]);
+          else handleSetFunction(data);
         })
         .catch((e) => {
           console.log(e);

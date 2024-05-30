@@ -42,9 +42,16 @@ const {setUserName} = useContext(ComentsContext)
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        alert('Form data submitted successfully!');
+        fetch(`/findUser/${name}`)
+        .then(data=>{
+          console.log(data);
+        })
+        .catch(e=>{
+          console.log(e);
+        })
         setAuthenticated(true)
         setUserName(name)
+       
       })
       .catch(error => {
         console.error('Error submitting form data:', error);
