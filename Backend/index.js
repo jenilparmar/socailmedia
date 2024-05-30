@@ -50,24 +50,14 @@ app.get("/users/:email", (req, res) => {
     .catch((error) => console.log(error));
 });
 app.post("/Posts", (req, res) => {
-  const user = {
-    accountName: "jenil bro",
-    imgUrl: "lelelelelele",
-    likes: {
-      p1 :12,
-      p2 : 24,
-      p3:41,
-      p4:23,
-    },
-    commets: {
-      accountName1: "Hy this is my comments 1",
-      accountName2: "Hy this is my comments 2",
-    },
-  };
+
+const post = req.body
+//  console.log(post);
+//  res.send("yes")
   db.collection("Posts")
-    .insertOne(user)
+    .insertOne(post)
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.send("Haa post me save ho gaya ");
     })
     .catch((error) => console.log(error));

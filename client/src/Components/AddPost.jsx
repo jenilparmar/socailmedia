@@ -17,6 +17,7 @@ export default function AddPost({ activeFunction }) {
       reader.onloadend = () => {
         // After reading the file, set the file preview to the result (data URL)
         setFilePreview(reader.result);
+
         setIsUploaded(true); // Set isUploaded to true
       };
 
@@ -29,7 +30,31 @@ export default function AddPost({ activeFunction }) {
   };
 
   const handlePost = () => {
-      console.log(filePreview);
+    fetch("/Posts", {
+      method: "POST",
+      body: JSON.stringify({
+        accountName: "jenil bhai",
+        imgUrl: filePreview,
+        likes: {
+          p1: 0,
+          p2: 0,
+          p3: 0,
+          p4: 0,
+        },
+        caption: caption,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((data) => {
+        console.log(data);
+        handleClick('Home')();
+        window.location.reload(true)
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -37,9 +62,11 @@ export default function AddPost({ activeFunction }) {
       <i
         className="fa-solid fa-xmark text-white absolute right-4 top-4 cursor-pointer"
         onClick={handleClick("Home")}></i>
-      <div className=" w-80 h-60  self-center" style={{
-        height:"70vh"
-      }}>
+      <div
+        className=" w-80 h-60  self-center"
+        style={{
+          height: "70vh",
+        }}>
         {!isUploaded && (
           <>
             <label
@@ -91,15 +118,22 @@ export default function AddPost({ activeFunction }) {
             value={caption}
             onChange={handleCaptionChange}
             className="block w-full text-sm py-2 px-4 rounded-full border-0 bg-black text-yellow-400 focus:outline-none  focus:text-white transition-border duration-700"
-          style={{
-            borderBottom:"0.2vh solid #3d3a3a"
-          }}/>
+            style={{
+              borderBottom: "0.2vh solid #3d3a3a",
+            }}
+          />
         </div>
       )}
       {/* Post button */}
       {isUploaded && (
         <button
-          onClick={handlePost}
+          onClick={() => {
+            handlePost();
+            // handleClick('Home');
+            // console.log("home");
+          }}
+          //  onClick={()=>{ handleClick('Home')}
+          // }
           className="bg-yellow-400 text-black px-4 py-2 rounded-md mt-4 hover:bg-yellow-500 transition-all duration-300">
           Post
         </button>

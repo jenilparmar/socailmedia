@@ -44,12 +44,13 @@ useEffect(()=>{
         <div className="text-white z-20 ">{user}</div>
         <i className="z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white" onClick={()=>{window.location.reload()}}></i>
         {/* Map over posts array and render Post components */}
-        {posts.map((post) => (
+        {posts.slice().reverse().map((post) => (
           <Post
             handleCommentBox={handleCommentBox}
             commentActive={commentActive}
             name={post.accountName}
             date={post.date}
+            caption = {post['caption']}
             img={post['imgUrl']}
             id={post['_id']}
             likesCount={post['likes']}

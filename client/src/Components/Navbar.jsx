@@ -21,13 +21,12 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
           className={`fa-solid fa-house text-${color} justify-center self-center`}
           onClick={() => {
             handleClick("Home");
-            setCommentActive(true)
+            setCommentActive(true);
           }}></i>
         <i
           className={`fa-solid fa-magnifying-glass text-${color} justify-center self-center`}
           onClick={() => handleClick("Search")}></i>
 
-      
         <i
           className={`fa-solid fa-plus text-${color} justify-center self-center`}
           onClick={() => handleClick("Add Post")}></i>

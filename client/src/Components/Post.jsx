@@ -7,7 +7,8 @@ export default function Post({
   handleCommentBox,
   id,
   commentActive,
-  likesCount
+  likesCount,
+  caption
 }) {
   const [imgArray, setImgArray] = useState([]);
   const { setName } = useContext(ComentsContext);
@@ -73,8 +74,13 @@ a.forEach(e=>{
   return (
     <div className="post-container flex flex-col bg-black">
       <div className="containerPost flex flex-row w-full h-80 self-center">
-        <div className="post bg-yellow-300 w-3/5 h-72 self-center text-black">
-          {img}
+        <div className="post bg-black w-3/5 h-72 self-center text-black"style={{
+          backgroundImage:`url(${img})`,
+          backgroundSize: "contain",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}>
+          
         </div>
         <div className="description bg-black-700 w-2/5 text-white h-72 self-center">
           <div className="flex flex-row h-10" style={{ borderBottom: "0.2vh solid #3d3a3a" }}>
@@ -83,7 +89,7 @@ a.forEach(e=>{
           </div>
           <div className="flex flex-col gap-1">
             <div className="text-xs indent-3 max-h-6">
-              {"HI i am a sample discriptiohn it will be a great app and website though"}
+              {caption}
             </div>
             <div className="flex flex-col gap-2 my-3">
               {groupedImgArray.map((group, groupIndex) => (
