@@ -40,7 +40,7 @@ useEffect(()=>{
         }`}>
         <h3>Home</h3>
         <div className="l text-white z-20 absolute right-10 flex flex-row gap-2 top-5 font-serif">𝐻𝑒𝓁𝓁𝑜 <div className="first-letter:capitalize">{user}!!</div></div>
-        <i className="z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white" onClick={()=>{window.location.reload()}}></i>
+        <i className="i z-20 fa-solid fa-arrow-rotate-right absolute top-6 right-2 text-white" onClick={()=>{window.location.reload()}}></i>
         {/* Map over posts array and render Post components */}
         {posts.slice().reverse().map((post) => (
           <Post

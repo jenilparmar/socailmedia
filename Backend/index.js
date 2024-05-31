@@ -49,7 +49,7 @@ app.get("/users/:email", (req, res) => {
 });
 app.post("/Posts", (req, res) => {
   const post = req.body;
-// console.log(post);
+  // console.log(post);
   db.collection("Posts")
     .insertOne(post)
     .then((data) => {
@@ -234,10 +234,7 @@ app.get("/addFollowing/:otherAccount/:selfAccount", (req, res) => {
   const otherAccount = req.params.otherAccount;
   const selfAccount = req.params.selfAccount;
   db.collection("FindUser")
-    .updateOne(
-      { name: selfAccount },
-      { $push: { following: otherAccount } }
-    )
+    .updateOne({ name: selfAccount }, { $push: { following: otherAccount } })
     .then((data) => {
       res.send(data);
     })
@@ -249,10 +246,7 @@ app.get("/addFollower/:otherAccount/:selfAccount", (req, res) => {
   const otherAccount = req.params.otherAccount;
   const selfAccount = req.params.selfAccount;
   db.collection("FindUser")
-    .updateOne(
-      { name: selfAccount },
-      { $push: { followers: otherAccount } }
-    )
+    .updateOne({ name: selfAccount }, { $push: { followers: otherAccount } })
     .then((data) => {
       res.send(data);
     })
@@ -275,6 +269,41 @@ app.get("/checkIsFollowing/:othername/:selfName", (req, res) => {
     })
     .catch((e) => res.send(e));
 });
+app.get("/deletePost/:id", (req, res) => {
+  const id = req.params.id;
+  db.collection("Posts")
+    .deleteOne({ _id: new ObjectId(id) })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+app.get("/deleteFromFindUser/:name/:index", (req, res) => {
+  const name = req.params.name;
+  const index = parseInt(req.params.index); // Parse index to integer
+
+  db.collection("FindUser")
+    .findOne({ name: name })
+    .then((data) => {
+      let arr = data["posts"]
+        .slice(0, index)
+        .concat(data["posts"].slice(index + 1));
+
+      // Update the document with the modified array
+      return db.collection("FindUser").updateOne({ name: name }, { $set: { posts: arr } });
+    })
+    .then((result) => {
+      res.send(result); // Send the update result to the client
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(500).send("Error deleting element from array.");
+    });
+});
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {

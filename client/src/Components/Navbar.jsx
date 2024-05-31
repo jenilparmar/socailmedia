@@ -36,25 +36,25 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
           borderRight: ".2vh solid #3d3a3a ",
         }}>
         <i
-          className={`fa-solid fa-house text-${color} justify-center self-center`}
+          className={`i fa-solid fa-house text-${color} justify-center self-center`}
           onClick={() => {
             handleClick("Home");
             setCommentActive(true);
           }}></i>
         <i
-          className={`fa-solid fa-magnifying-glass text-${color} justify-center self-center`}
+          className={`i fa-solid fa-magnifying-glass text-${color} justify-center self-center`}
           onClick={() => handleClick("Search")}></i>
 
         <i
-          className={`fa-solid fa-plus text-${color} justify-center self-center`}
+          className={`i fa-solid fa-plus text-${color} justify-center self-center`}
           onClick={() => handleClick("Add Post")}></i>
         {!isDarkMode ? (
           <i
-            className={`fa-regular fa-moon text-${color} justify-center self-center`}
+            className={`i fa-regular fa-moon text-${color} justify-center self-center`}
             onClick={() => darkMode(true)}></i>
         ) : (
           <i
-            className={`fa-regular fa-sun text-${color} justify-center self-center`}
+            className={`i fa-regular fa-sun text-${color} justify-center self-center`}
             onClick={() => darkMode(false)}></i>
         )}
         <div
