@@ -50,8 +50,8 @@ export default function App() {
   return (
     <>
       <ComentsContext.Provider
-        value={{ setCommentActive, commentActive,id,setID,setName, name ,getSigning ,setGetSigning,userName ,setUserName}}>
-        {" "}
+        value={{ setCommentActive, commentActive,id,setID,setName, name ,getSigning ,setGetSigning,userName,handleClick ,setUserName}}>
+        {" "} 
         {/* Provide the context value */}
         {!authenticated ? (
           <AuthenticationPage  setAuthenticated={setAuthenticated}/> 

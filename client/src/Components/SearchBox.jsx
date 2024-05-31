@@ -5,11 +5,11 @@ import ProfileVisit from "./ProfileVisit";
 
 export default function SearchBox({ isDarkMode, handleClick }) {
   const [person, setPerson] = useState({});
-  
   const [searched, setSearched] = useState(false);
   const [followingCount,setFollowingCount] = useState(-1)
   const [followersCount,setFollowersCount] = useState(-1)
   const [info, setInfo] = useState({});
+  const [flag,setFlag] = useState(false)
   let len = 0;
   if (!info) {
     len = info["posts"].length;
@@ -21,6 +21,7 @@ export default function SearchBox({ isDarkMode, handleClick }) {
   setInterval(()=>{
     if(person["following"]){
       setFollowingCount(person["following"].length)
+      
       clearInterval()
     }else{
       setFollowingCount(-1)
@@ -45,10 +46,10 @@ export default function SearchBox({ isDarkMode, handleClick }) {
           className="z-20 fa-solid fa-xmark absolute top-6 right-8 text-white"
           onClick={() => handleClick("Home")}></i>
         <br />
-        <SearchInbox setPerson={setPerson} setInfo={setInfo} />
+        <SearchInbox setFlag={setFlag} setPerson={setPerson} setInfo={setInfo} />
         {searched ? <ProfileVisit person={person} info={info} /> : undefined}
       </div>
-      {person ? (
+      {flag ? (
         <div
           className="w-64 h-12 bg-black  hover:bg-slate-700 flex flex-col relative left-16  top-28 text-white text-center text-sm z-20"
           onClick={hadnleProfile}>
@@ -56,8 +57,8 @@ export default function SearchBox({ isDarkMode, handleClick }) {
             {info["name"]}
           </div>
           {info?<div className="flex flex-row gap-3">
-            <div>{followersCount} followers</div>
-            <div>{followingCount} followings</div>
+            <div>{followersCount==-1?0:followersCount} followers</div>
+            <div>{followingCount==-1?0:followingCount} followings</div>
          
           </div>:undefined}
         </div>

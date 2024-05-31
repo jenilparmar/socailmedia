@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import ComentsContext from "../myContext";
 
-export default function SearchInbox({ setPerson ,setInfo}) {
+export default function SearchInbox({ setPerson ,setFlag,setInfo}) {
   const [searchValue, setSearchValue] = useState("");
   const handleSetFunction = (name) => {
     setPerson(name);
@@ -8,10 +9,15 @@ export default function SearchInbox({ setPerson ,setInfo}) {
   const handleChange = (e) => {
     setSearchValue(e.target.value);
   };
-
+const { handleClick} = useContext(ComentsContext)
+const { userName} = useContext(ComentsContext)
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      console.log(`/search/${searchValue}`);
+      // console.log(userName['userName']);
+      if(searchValue == userName ){
+        handleClick("Profile")
+      }
+      else{
       fetch(`/search/${searchValue}`)
         .then((res) => {
           return res.json();
@@ -22,14 +28,14 @@ export default function SearchInbox({ setPerson ,setInfo}) {
           else {
             console.log(data);
             handleSetFunction(data.name);
-            
+            setFlag(true)
             setInfo(data)
           }
         })
         .catch((e) => {
           console.log(e);
         });
-    }
+    }}
   };
 
   return (

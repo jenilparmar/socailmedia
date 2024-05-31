@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import ComentsContext from "../myContext";
+import Loader from "./Loader";
 export default function Profile() {
   const userName = useContext(ComentsContext);
+  const {setCommentActive} = useContext(ComentsContext)
+  setCommentActive(true)
   const [profile, setProfile] = useState({});
   const [followersCount, setFollowersCount] = useState(-1);
   const [followingCount, setFollowingCount] = useState(-1);
   const [len, setLen] = useState(0);
+  const [loading , setLoading] = useState(true)
+
 
   const [profilePost, setProfilePost] = useState([]);
 
@@ -26,7 +31,8 @@ export default function Profile() {
     if (profile["posts"]) {
       setLen(profile["posts"].length);
       setFollowingCount(profile["following"].length);
-      setFollowingCount(profile["followers"].length);
+      setFollowersCount(profile["followers"].length);
+      setLoading(false)
       clearInterval();
     } else {
       setLen(-1);
@@ -78,7 +84,8 @@ export default function Profile() {
 
   return (
     <>
-      <div className="z-20 containerProfile fixed left-10 w-screen h-screen bg-black text-white">
+     {loading?<Loader/>:<>
+     <div className="z-20 containerProfile fixed left-10 w-screen h-screen bg-black text-white">
         <div
           className="bg-black fixed left-56 top-6 w-56 h-56"
           style={{
@@ -103,8 +110,6 @@ export default function Profile() {
           borderTop: ".2vh solid #3d3a3a ",
         }}>
         {profilePost
-          .slice()
-          .reverse()
           .map((post, index) => (
             <div
               key={index}
@@ -135,6 +140,7 @@ export default function Profile() {
             </div>
           ))}
       </div>
+     </>}
     </>
   );
 }
