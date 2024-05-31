@@ -11,14 +11,18 @@ export default function SearchInbox({ setPerson ,setInfo}) {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
+      console.log(`/search/${searchValue}`);
       fetch(`/search/${searchValue}`)
         .then((res) => {
           return res.json();
         })
         .then((data) => {
           // console.log(data);
-          if(data==null)  handleSetFunction(null);
-          else {handleSetFunction(data);
+          if(data===null) handleSetFunction(null);
+          else {
+            console.log(data);
+            handleSetFunction(data.name);
+            
             setInfo(data)
           }
         })

@@ -20,7 +20,7 @@ export default function SignIn(setAuthenticated) {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        // setFilePreview(reader.result);
+        // setFilePreview(reader.resu/lt);
         setProfilePhoto(e.target.result);
          // Logging the file preview
       };
@@ -38,32 +38,54 @@ export default function SignIn(setAuthenticated) {
     });
   };
 const {setUserName} = useContext(ComentsContext)
+
   const handleSubmit = () => {
-  
-    const { email, password, name} = formData;
-    
-  
-    fetch(`/Dataentry/${email}/${password}/${name}/${profilePhoto}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
-        fetch(`/findUser/${name}`)
-        .then(data=>{
-          // console.log(data);
-        })
-        .catch(e=>{
-          console.log(e);
-        })
-        setAuthenticated(true)
-        setUserName(name)
-       
-      })
-      .catch(error => {
-        console.error('Error submitting form data:', error);
-      });
+  const { email, password, name } = formData;
+
+  // Create an object with the form data
+  const requestData = {
+    email: email,
+    password: password,
+    name: name,
+    imgUrl: profilePhoto,
+    following:[],
+    followers:[],
+    posts:[]
   };
+
+  fetch(`/Dataentry`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(requestData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    // Assuming your server responds with some data
+    return response.json();
+  })
+  .then(data => {
+    // Do something with the response data if needed
+    console.log(data);
+    // Fetch user or perform other actions as needed
+    fetch(`/findUser/${name}`)
+      .then(data => {
+        // console.log(data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    setAuthenticated(true);
+    setUserName(name);
+  })
+  .catch(error => {
+    console.error('Error submitting form data:', error);
+  });
+};
+
   
   return (
     <center style={{ backgroundColor:"#1c1c1c"}}>

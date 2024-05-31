@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import ComentsContext from "../myContext";
 
 export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
@@ -8,6 +8,24 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
 
   let color = isDarkMode ? "black" : "white";
   const { setCommentActive } = useContext(ComentsContext);
+
+  const { userName } = useContext(ComentsContext);
+  const [image , setImage] = useState("")
+  useEffect(()=>{
+    // console.log(name);
+    fetch(`/findUser/${userName}`)
+    .then(res=>{
+      return res.json();
+    })
+    .then(data=>{
+      // console.log(data);
+      setImage(data['imgUrl'])
+      // console.log(image);
+    })
+    .catch(e=>{
+      console.log(e);
+    })
+  },[])
   return (
     <>
       <div
@@ -40,10 +58,16 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
             onClick={() => darkMode(false)}></i>
         )}
         <div
-          className={`profilePhoto w-6 h-6 bg-${color} justify-center self-center`}
+          className={`profilePhoto w-6 h-6 bg-black justify-center self-center`}
           onClick={() => {
             handleClick("Profile");
             setCommentActive(true);
+          }} 
+          style={{
+            backgroundImage:`url(${image})`,
+            backgroundPosition:"center",
+            backgroundSize:"cover",
+            backgroundRepeat:"no-repeat"
           }}></div>
       </div>
     </>

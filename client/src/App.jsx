@@ -10,7 +10,7 @@ import AddPost from "./Components/AddPost";
 import Profile from "./Components/Profile";
 import Commentbox from "./Components/Commentbox";
 import AuthenticationPage from "./Components/AuthenticationPage";
-import ProfileVisit from "./Components/ProfileVisit";
+
 
 export default function App() {
   const [active, setActive] = useState("Home");
@@ -29,6 +29,7 @@ export default function App() {
   const handleDarkMode = (mode) => {
     setIsDarkMode(mode);
   };
+  
   useEffect(() => {
     // Check if the user is authenticated from localStorage
     const isAuth = localStorage.getItem("isAuthenticated");
@@ -49,7 +50,7 @@ export default function App() {
   return (
     <>
       <ComentsContext.Provider
-        value={{ setCommentActive, commentActive,id,setID, setName, name ,getSigning ,setGetSigning,userName ,setUserName}}>
+        value={{ setCommentActive, commentActive,id,setID,setName, name ,getSigning ,setGetSigning,userName ,setUserName}}>
         {" "}
         {/* Provide the context value */}
         {!authenticated ? (

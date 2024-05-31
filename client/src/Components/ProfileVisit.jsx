@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import ComentsContext from "../myContext";
 
-export default function ProfileVisit({ person }) {
+export default function ProfileVisit({ person, info }) {
   // State to store the person's posts (as an array)
   const [postArray, setPostArray] = useState([]);
   const [profilePost, setProfilePost] = useState([]);
   const [followingCount, setFollowingCount] = useState(-1);
   const [followersCount, setFollowersCount] = useState(-1);
   const [flag, setFlag] = useState(false);
+  const [image, setImage] = useState("");
+
   // Fetches posts on component mount (empty dependency array [])
   useEffect(() => {
-    setPostArray(Object.values(person["posts"])); // Assuming "post" is an object
+    setPostArray(info["posts"]); // Assuming "post" is an object
   }, []);
   useEffect(() => {
-    fetch(`getProfilePosts/${person.accountName}`)
+    fetch(`getProfilePosts/${person}`)
       .then((res) => {
         return res.json();
       })
@@ -25,18 +27,19 @@ export default function ProfileVisit({ person }) {
         console.log(e);
       });
   }, []);
- 
+
   setInterval(() => {
-    if (person["following"]) {
-      setFollowingCount(person["following"].length);
+    // console.log(info["following"]);
+    if (info["following"] != []) {
+      setFollowingCount(info["following"].length);
       clearInterval();
     } else {
       setFollowingCount(-1);
     }
   }, 1000);
   setInterval(() => {
-    if (person["followers"]) {
-      setFollowersCount(person["followers"].length);
+    if (info["followers"]) {
+      setFollowersCount(info["followers"].length);
       clearInterval();
     } else {
       setFollowingCount(-1);
@@ -45,7 +48,7 @@ export default function ProfileVisit({ person }) {
 
   const { userName } = useContext(ComentsContext);
   useEffect(() => {
-    fetch(`/checkIsFollowing/${person.accountName}/${userName}`)
+    fetch(`/checkIsFollowing/${person}/${userName}`)
       .then((res) => {
         return res.json();
       })
@@ -57,8 +60,7 @@ export default function ProfileVisit({ person }) {
       });
   }, []);
   function addToFollow() {
-    
-    fetch(`/addFollowing/${person.accountName}/${userName}`)
+    fetch(`/addFollowing/${person}/${userName}`)
       .then((res) => {
         return res.json();
       })
@@ -68,8 +70,8 @@ export default function ProfileVisit({ person }) {
       .catch((e) => {
         console.log(e);
       });
-    
-    fetch(`/addFollower/${userName}/${person.accountName}`)
+
+    fetch(`/addFollower/${userName}/${person}`)
       .then((res) => {
         return res.json();
       })
@@ -79,9 +81,24 @@ export default function ProfileVisit({ person }) {
       .catch((e) => {
         console.log(e);
       });
-      setFlag(true)
+    setFlag(true);
   }
   // Renders profile information and posts
+  useEffect(() => {
+    fetch(`/findUser/${person}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        setImage(data["imgUrl"]);
+        // console.log(image);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <>
       <div className="overlay3"></div>
@@ -90,10 +107,21 @@ export default function ProfileVisit({ person }) {
         style={{}}>
         {/* Profile header */}
         <div className="relative left-44 top-20 -my-4 mx-4 text-white">
-          @{person.accountName}
+          @{person}
         </div>
         <div className="flex relative left-20 top-16 flex-row">
-          <div className="bg-white w-20 h-20 rounded-full mx-2"></div>
+          <div
+            className=" w-20 h-20 rounded-full mx-2"
+            style={{
+              backgroundImage: `url(${
+                image !== ""
+                ? image
+                  : "https://cdn2.vectorstock.com/i/1000x1000/11/41/male-profile-picture-vector-2051141.jpg"
+              })`,
+              backgroundSize:"cover",
+              backgroundPosition:"center",
+              backgroundRepeat:"no-repeat"
+            }}></div>
           <div className="text-gray-600 text-sm w-fit h-4 self-center mx-4">
             {followingCount} following
           </div>
@@ -125,29 +153,32 @@ export default function ProfileVisit({ person }) {
 
         {/* Post list */}
         <div className="flex flex-col overflow-auto w-96 relative top-20 left-20">
-          {profilePost.map((post, index) => (
-            <div
-              key={index}
-              className="bg-black text-white"
-              style={{
-                borderBottom: "0.2vh solid #3d3a3a",
-              }}>
-              <div className="flex flex-row h-fit">
-                <div
-                  className="bg-black self-center  w-20 h-14"
-                  style={{
-                    marginLeft: "1.5vh",
-                    marginBottom: "2vh",
-                    marginTop: "2vh",
-                    backgroundImage: `url(${post["imgUrl"]})`,
-                    backgroundSize: "contain",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                  }}></div>
-                <div className="mx-3   self-center">{post["caption"]}</div>
+          {profilePost
+            .slice()
+            .reverse()
+            .map((post, index) => (
+              <div
+                key={index}
+                className="bg-black text-white"
+                style={{
+                  borderBottom: "0.2vh solid #3d3a3a",
+                }}>
+                <div className="flex flex-row h-fit">
+                  <div
+                    className="bg-black self-center  w-20 h-14"
+                    style={{
+                      marginLeft: "1.5vh",
+                      marginBottom: "2vh",
+                      marginTop: "2vh",
+                      backgroundImage: `url(${post["imgUrl"]})`,
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                    }}></div>
+                  <div className="mx-3   self-center">{post["caption"]}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </>

@@ -14,6 +14,8 @@ export default function Post({
   const { setName } = useContext(ComentsContext);
   const { setID } = useContext(ComentsContext);
   const [LIKECOUNT, SETLIKECOUNT] = useState(likesCount);
+  const [image , setImage] = useState("")
+
   const handleClickForComment = (name) => {
     handleCommentBox();
     setName(name);
@@ -70,6 +72,20 @@ export default function Post({
   for (let i = 0; i < imgArray.length; i += 2) {
     groupedImgArray.push(imgArray.slice(i, i + 2));
   }
+  useEffect(()=>{
+    fetch(`/findUser/${name}`)
+    .then(res=>{
+      return res.json();
+    })
+    .then(data=>{
+      // console.log(data);
+      setImage(data['imgUrl'])
+      // console.log(image);
+    })
+    .catch(e=>{
+      console.log(e);
+    })
+  },[])
 
   return (
     <div className="post-container flex flex-col bg-black">
@@ -92,13 +108,21 @@ export default function Post({
             }}>
             <div
               className="bg-white mx-2 self-center w-7 h-7"
-              style={{ borderRadius: "50%" }}></div>
+              style={{
+                borderRadius: "50%",
+                backgroundImage: `url(${image})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}></div>
             <div className="self-center" style={{}}>
               {name}
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-xs overflow-y-auto indent-3 max-h-12">{caption}</div>
+            <div className="text-xs overflow-y-auto indent-3 max-h-12">
+              {caption}
+            </div>
             <div className="flex flex-col gap-2 ">
               {groupedImgArray.map((group, groupIndex) => (
                 <div

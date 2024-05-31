@@ -5,7 +5,7 @@ import ProfileVisit from "./ProfileVisit";
 
 export default function SearchBox({ isDarkMode, handleClick }) {
   const [person, setPerson] = useState({});
-  // const [profile,setProfile] = useState({})
+  
   const [searched, setSearched] = useState(false);
   const [followingCount,setFollowingCount] = useState(-1)
   const [followersCount,setFollowersCount] = useState(-1)
@@ -46,14 +46,14 @@ export default function SearchBox({ isDarkMode, handleClick }) {
           onClick={() => handleClick("Home")}></i>
         <br />
         <SearchInbox setPerson={setPerson} setInfo={setInfo} />
-        {searched ? <ProfileVisit person={person} /> : undefined}
+        {searched ? <ProfileVisit person={person} info={info} /> : undefined}
       </div>
       {person ? (
         <div
           className="w-64 h-12 bg-black  hover:bg-slate-700 flex flex-col relative left-16  top-28 text-white text-center text-sm z-20"
           onClick={hadnleProfile}>
           <div className="text-left font-bold text-xl">
-            {info["accountName"]}
+            {info["name"]}
           </div>
           {info?<div className="flex flex-row gap-3">
             <div>{followersCount} followers</div>

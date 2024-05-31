@@ -49,15 +49,16 @@ app.get("/users/:email", (req, res) => {
 });
 app.post("/Posts", (req, res) => {
   const post = req.body;
-
+// console.log(post);
   db.collection("Posts")
     .insertOne(post)
     .then((data) => {
       let insertedId = data.insertedId; // Get the inserted ID
       // Update the FindUser collection with the post ID
+      console.log(insertedId);
       db.collection("FindUser")
         .updateOne(
-          { accountName: post.accountName }, // Assuming you're using accountName to identify the user
+          { name: post.accountName }, // Assuming you're using accountName to identify the user
           { $push: { posts: insertedId } } // Add the post ID to the user's posts array
         )
         .then(() => {
@@ -105,7 +106,7 @@ app.get("/GetAllPosts", (req, res) => {
 app.get("/search/:name", (req, res) => {
   const name = req.params.name;
   db.collection("FindUser")
-    .findOne({ accountName: name })
+    .findOne({ name: name })
     .then((data) => {
       res.send(data);
     })
@@ -129,30 +130,20 @@ app.get("/Auth/:email/:passward", (req, res) => {
     })
     .catch((e) => res.send(e));
 });
-app.get("/Dataentry/:email/:passward/:name/:imgUrl", (req, res) => {
-  const email = req.params.email;
-  const name = req.params.name;
-  const passward = req.params.passward;
-  const imgUrl= req.params.imgUrl
-  const data2 = {
-    accountName: name,
-    followers: [],
-    following: [],
-    imgUrl: imgUrl,
-  };
+app.post("/Dataentry", (req, res) => {
+  const data2 = req.body;
+  console.log(data2.password);
   db.collection("Users")
     .insertOne({
-      email: email,
-      accountName: name,
-      passward: passward,
+      email: data2.email,
+      accountName: data2.name,
+      passward: data2.password,
     })
     .then((data) => {
-      db.collection("FindUser")
-      .insertOne(data2)
+      db.collection("FindUser").insertOne(data2);
       res.status(200).send(data);
     })
     .catch((e) => res.send(e));
- 
 });
 app.get("/ForgotPass/:email", (req, res) => {
   const email = req.params.email;
@@ -212,73 +203,78 @@ app.get("/Addlike/:id/:pera", (req, res) => {
 app.get("/findUser/:name", (req, res) => {
   const name = req.params.name;
   db.collection("FindUser")
-    .insertOne({
-      accountName: name,
+    .findOne({
+      name: name,
     })
     .then((data) => {
-      res.send("successfully added");
+      res.send(data);
     })
     .catch((e) => {
       console.log(e);
     });
 });
-app.get('/getProfilePosts/:name', (req, res) => {
+app.get("/getProfilePosts/:name", (req, res) => {
   const name = req.params.name;
-  db.collection('Posts').find({ accountName: name })
+  db.collection("Posts")
+    .find({ accountName: name })
     .toArray() // Convert the cursor to an array
-    .then(posts => {
+    .then((posts) => {
       if (posts.length > 0) {
         res.send(posts);
       } else {
         res.status(404).send("No posts found for the given accountName.");
       }
     })
-    .catch(e => {
+    .catch((e) => {
       console.log("Error:", e);
       res.status(500).send("An error occurred while fetching profile posts.");
     });
 });
-app.get('/addFollowing/:otherAccount/:selfAccount',(req,res)=>{
+app.get("/addFollowing/:otherAccount/:selfAccount", (req, res) => {
   const otherAccount = req.params.otherAccount;
   const selfAccount = req.params.selfAccount;
   db.collection("FindUser")
-  .updateOne({accountName:selfAccount},
-    {$push: { following: otherAccount } }
-  ).then(data=>{
-    res.send(data)
-  })
-  .catch(e=>{
-    res.send(e)
-  })
-})
-app.get('/addFollower/:otherAccount/:selfAccount',(req,res)=>{
+    .updateOne(
+      { name: selfAccount },
+      { $push: { following: otherAccount } }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((e) => {
+      res.send(e);
+    });
+});
+app.get("/addFollower/:otherAccount/:selfAccount", (req, res) => {
   const otherAccount = req.params.otherAccount;
   const selfAccount = req.params.selfAccount;
   db.collection("FindUser")
-  .updateOne({accountName:selfAccount},
-    {$push: { followers: otherAccount } }
-  ).then(data=>{
-    res.send(data)
-  })
-  .catch(e=>{
-    res.send(e)
-  })
-})
-app.get('/checkIsFollowing/:othername/:selfName',(req,res)=>{
+    .updateOne(
+      { name: selfAccount },
+      { $push: { followers: otherAccount } }
+    )
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((e) => {
+      res.send(e);
+    });
+});
+app.get("/checkIsFollowing/:othername/:selfName", (req, res) => {
   const othername = req.params.othername;
   const selfName = req.params.selfName;
   db.collection("FindUser")
-  .findOne({accountName:selfName})
-  .then(data=>{
-    // console.log(data);
-    if(data['following'].includes(othername)){
-      res.send(true)}
-      else{
-        res.send(false)
+    .findOne({ name: selfName })
+    .then((data) => {
+      // console.log(data);
+      if (data["following"].includes(othername)) {
+        res.send(true);
+      } else {
+        res.send(false);
       }
-  })
-  .catch(e=>res.send(e))
-})
+    })
+    .catch((e) => res.send(e));
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {
