@@ -7,6 +7,8 @@ export default function SearchBox({ isDarkMode, handleClick }) {
   const [person, setPerson] = useState({});
   // const [profile,setProfile] = useState({})
   const [searched, setSearched] = useState(false);
+  const [followingCount,setFollowingCount] = useState(-1)
+  const [followersCount,setFollowersCount] = useState(-1)
   const [info, setInfo] = useState({});
   let len = 0;
   if (!info) {
@@ -16,6 +18,22 @@ export default function SearchBox({ isDarkMode, handleClick }) {
   const hadnleProfile = () => {
     setSearched(!searched);
   };
+  setInterval(()=>{
+    if(person["following"]){
+      setFollowingCount(person["following"].length)
+      clearInterval()
+    }else{
+      setFollowingCount(-1)
+    }
+  },1000)
+  setInterval(()=>{
+    if(person["followers"]){
+      setFollowersCount(person["followers"].length)
+      clearInterval()
+    }else{
+      setFollowingCount(-1)
+    }
+  },1000)
   return (
     <>
       <div
@@ -38,9 +56,9 @@ export default function SearchBox({ isDarkMode, handleClick }) {
             {info["accountName"]}
           </div>
           {info?<div className="flex flex-row gap-3">
-            <div>{info["followers"]} followers</div>
-            <div>{info["following"]} followings</div>
-            <div>{len} Posts</div>
+            <div>{followersCount} followers</div>
+            <div>{followingCount} followings</div>
+         
           </div>:undefined}
         </div>
       ) : undefined}

@@ -73,11 +73,11 @@ app.post("/Posts", (req, res) => {
       res.status(500).send("Error inserting post.");
     });
 });
-app.get("/PostData/:name", (req, res) => {
-  const name = req.params.name;
+app.get("/PostData/:id", (req, res) => {
+  const id = req.params.id;
 
   db.collection("Posts")
-    .findOne({ accountName: name }) // Query for a document where the 'name' field matches the provided name
+    .findOne({ _id: new ObjectId(id) }) // Query for a document where the 'name' field matches the provided name
     .then((data) => {
       if (data) {
         res.json(data); // Send the found document as a JSON response
@@ -129,16 +129,16 @@ app.get("/Auth/:email/:passward", (req, res) => {
     })
     .catch((e) => res.send(e));
 });
-app.get("/Dataentry/:email/:passward/:name", (req, res) => {
+app.get("/Dataentry/:email/:passward/:name/:imgUrl", (req, res) => {
   const email = req.params.email;
   const name = req.params.name;
   const passward = req.params.passward;
+  const imgUrl= req.params.imgUrl
   const data2 = {
     accountName: name,
-    post: {},
-    followers: 0,
-    following: 0,
-    imgUrl: "lkjdg",
+    followers: [],
+    following: [],
+    imgUrl: imgUrl,
   };
   db.collection("Users")
     .insertOne({
@@ -238,7 +238,47 @@ app.get('/getProfilePosts/:name', (req, res) => {
       res.status(500).send("An error occurred while fetching profile posts.");
     });
 });
-
+app.get('/addFollowing/:otherAccount/:selfAccount',(req,res)=>{
+  const otherAccount = req.params.otherAccount;
+  const selfAccount = req.params.selfAccount;
+  db.collection("FindUser")
+  .updateOne({accountName:selfAccount},
+    {$push: { following: otherAccount } }
+  ).then(data=>{
+    res.send(data)
+  })
+  .catch(e=>{
+    res.send(e)
+  })
+})
+app.get('/addFollower/:otherAccount/:selfAccount',(req,res)=>{
+  const otherAccount = req.params.otherAccount;
+  const selfAccount = req.params.selfAccount;
+  db.collection("FindUser")
+  .updateOne({accountName:selfAccount},
+    {$push: { followers: otherAccount } }
+  ).then(data=>{
+    res.send(data)
+  })
+  .catch(e=>{
+    res.send(e)
+  })
+})
+app.get('/checkIsFollowing/:othername/:selfName',(req,res)=>{
+  const othername = req.params.othername;
+  const selfName = req.params.selfName;
+  db.collection("FindUser")
+  .findOne({accountName:selfName})
+  .then(data=>{
+    // console.log(data);
+    if(data['following'].includes(othername)){
+      res.send(true)}
+      else{
+        res.send(false)
+      }
+  })
+  .catch(e=>res.send(e))
+})
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {
   const likesObj = {

@@ -3,6 +3,7 @@ import ComentsContext from "../myContext";
 
 export default function SignIn(setAuthenticated) {
   const [profilePhoto, setProfilePhoto] = useState(null);
+ 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,32 +20,38 @@ export default function SignIn(setAuthenticated) {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
+        // setFilePreview(reader.result);
         setProfilePhoto(e.target.result);
+         // Logging the file preview
       };
       reader.readAsDataURL(file);
     }
   };
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value
+
     });
   };
 const {setUserName} = useContext(ComentsContext)
   const handleSubmit = () => {
-    const { email, password, name } = formData;
+  
+    const { email, password, name} = formData;
     
   
-    fetch(`/Dataentry/${email}/${password}/${name}`)
+    fetch(`/Dataentry/${email}/${password}/${name}/${profilePhoto}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
+        
         fetch(`/findUser/${name}`)
         .then(data=>{
-          console.log(data);
+          // console.log(data);
         })
         .catch(e=>{
           console.log(e);
@@ -146,7 +153,7 @@ const {setUserName} = useContext(ComentsContext)
               <button
                 type="submit"
                 className="w-full py-2 px-4 bg-yellow-500 text-black font-semibold rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
-              >
+            >
                 Submit
               </button>
             </div>

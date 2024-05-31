@@ -98,7 +98,7 @@ export default function Post({
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-xs indent-3 max-h-6">{caption}</div>
+            <div className="text-xs overflow-y-auto indent-3 max-h-12">{caption}</div>
             <div className="flex flex-col gap-2 ">
               {groupedImgArray.map((group, groupIndex) => (
                 <div

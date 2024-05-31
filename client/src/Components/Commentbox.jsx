@@ -26,12 +26,15 @@ export default function Commentbox() {
   const id = useContext(ComentsContext);
 
   useEffect(() => {
-    fetch(`/PostData/${name}`)
+    // console.log(id['id']);
+    fetch(`/PostData/${id['id']}`)
+    
       .then((res) => res.json())
       .then((data) => {
         if (data && data.comments) {
+          
           setComment(Object.values(data.comments));
-        //  console.log("ui hajhshdf");
+        
         }
       })
       .catch((error) => {

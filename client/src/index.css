@@ -314,3 +314,8 @@ i:hover{
   left: 125%;
   z-index: 50;
 }
+.l{
+  background: linear-gradient(to right, #fb00ff, #ffce08,#00d9ff, #1fff01);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
