@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { MongoClient, ObjectId } = require("mongodb");
-const dotenv = require('dotenv');
 const cors = require('cors')
+const dotenv = require('dotenv');
+
 dotenv.config();
 const {
   getImageL1,
@@ -13,6 +14,7 @@ const {
 
 const PORT = 5000;
 const app = express();
+app.use(cors())
 url = process.env.connectionString;
 const dbName = "MemeMenia";
 let db;
@@ -22,6 +24,7 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     db = client.db(dbName);
   })
   .catch((error) => console.error("MongoDB connection error:", error));
+
 
 app.use(express.json());
 function getLikeInfo(acn, pera) {
