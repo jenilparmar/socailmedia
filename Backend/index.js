@@ -353,9 +353,7 @@ app.get("/GetLikeButtons", (req, res) => {
 
   res.send(likesObj);
 });
-app.get('/',(res,res)=>{
-  res.send("Hi")
-})
+
 app.get("/api", (req, res) => {
   res.json({
     message: {
