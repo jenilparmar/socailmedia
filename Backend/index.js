@@ -14,7 +14,7 @@ const {
 
 const PORT = 5000;
 const app = express();
-app.use(cors())
+// app.use(cors())
 url = process.env.connectionString;
 const dbName = "MemeMenia";
 let db;
@@ -37,27 +37,25 @@ function getLikeInfo(acn, pera) {
       return e;
     });
 }
-// app.use(cors(
-//   {
-//     origin:['https://deploy-mern-1whq.vercel.app'],
-//     methods:['POST','GET'],
-//     credentials:true
-//   }
-// ))
+app.use(cors(
+  {
+    origin:['https://socialmedia-backend-xpaj.onrender.com/'],
+    methods:['POST','GET'],
+    credentials:true
+  }
+))
 //////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/users/:email", (req, res) => {
   const email = req.params.email;
-  const user = {
-    email: email,
-  };
+
   db.collection("Users")
-    .findOne(user)
+    .findOne({email:email})
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.send(data);
       // res.sendStatus(404)
     })
-    .catch((error) => console.log(error));
+    .catch((error) => res.send(error));
 });
 app.post("/Posts", (req, res) => {
   const post = req.body;
