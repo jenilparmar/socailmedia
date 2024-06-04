@@ -5,7 +5,7 @@ export default function Loader() {
     
     return (
     <>
-     <div className=" z z-50 h-screen w-screen  bg-black"></div>
+     <div className="H z z-50 h-screen w-screen  bg-black"></div>
         <div class="containers z-50 ">
           <div class="dot dot-1"></div>
           <div class="dot dot-2"></div>

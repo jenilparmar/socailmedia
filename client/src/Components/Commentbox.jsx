@@ -44,19 +44,19 @@ export default function Commentbox() {
 
   return (
     <div className="flex flex-col absolute w-80 mx-2 overflow-auto h-screen right-0">
-      <h3 className="-mx-0 my-0 bg-black text-white z-30 fixed w-full">
+      <h3 className="M -mx-0 my-0 bg-black text-white z-30 fixed w-full">
         Comments
       </h3>
       <i
-        className="fa-solid fa-xmark text-white fixed right-5 top-2 z-30 cursor-pointer"
+        className="N fa-solid fa-xmark text-white fixed right-5 top-2 z-30 cursor-pointer"
         onClick={handleClickForComment}></i>
       <div className="over2"></div>
-      <div className="comm text-white text-wrap flex flex-col z-20 mt-10">
+      <div className="comm text-white text-wrap bg-black flex flex-col z-20 mt-10">
         {comment
           .slice()
           .reverse()
           .map((e, index) => (
-            <div className="text-white z-20 h-fit text-sm hover:bg-gray-900 indent-4 hover:opacity-95" key={index}>
+            <div className="O text-white z-20 h-fit text-sm hover:bg-gray-900 indent-4 hover:opacity-95" key={index}>
               {e}
             </div>
           ))}

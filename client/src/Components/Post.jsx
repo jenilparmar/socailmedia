@@ -14,7 +14,7 @@ export default function Post({
   const { setName } = useContext(ComentsContext);
   const { setID } = useContext(ComentsContext);
   const [LIKECOUNT, SETLIKECOUNT] = useState(likesCount);
-  const [image , setImage] = useState("")
+  const [image, setImage] = useState("");
 
   const handleClickForComment = (name) => {
     handleCommentBox();
@@ -72,23 +72,38 @@ export default function Post({
   for (let i = 0; i < imgArray.length; i += 2) {
     groupedImgArray.push(imgArray.slice(i, i + 2));
   }
-  useEffect(()=>{
+  useEffect(() => {
     fetch(`/findUser/${name}`)
-    .then(res=>{
-      return res.json();
-    })
-    .then(data=>{
-      // console.log(data);
-      setImage(data['imgUrl'])
-      // console.log(image);
-    })
-    .catch(e=>{
-      console.log(e);
-    })
-  },[])
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        setImage(data["imgUrl"]);
+        // console.log(image);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+  const userName = useContext(ComentsContext);
+  const visited = () => {
+    fetch(`/setVisited/${id}/${userName["userName"]}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    alert(userName["userName"]);
+  };
 
   return (
-    <div className="post-container flex flex-col bg-black">
+    // <div className="post-container flex flex-col bg-black" onTouchEnd={visited}>
+    <div className="post-container  bg-black">
       <div className="containerPost flex flex-row w-full h-80 self-center">
         <div
           className="post bg-black w-3/5 h-72 self-center text-black"
@@ -101,7 +116,7 @@ export default function Post({
           }}></div>
         <div className="description bg-black-700 w-2/5 text-white h-72 self-center">
           <div
-            className="flex flex-row h-10"
+            className="c flex  flex-row h-10"
             style={{
               borderBottom: "0.2vh solid #3d3a3a",
               borderTop: "0.2vh solid #3d3a3a ",
@@ -115,21 +130,21 @@ export default function Post({
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
               }}></div>
-            <div className="self-center" style={{}}>
+            <div className="b self-center" style={{}}>
               {name}
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-xs overflow-y-auto indent-3 max-h-12">
+            <div className="e text-xs overflow-y-auto indent-3 max-h-12">
               {caption}
             </div>
             <div className="flex flex-col gap-2 ">
               {groupedImgArray.map((group, groupIndex) => (
                 <div
-                  className="flex flex-row justify-center gap-2"
+                  className="g flex flex-row justify-center gap-2"
                   key={groupIndex}>
                   {group.map((imgUrl, index) => (
-                    <div className="flex flex-row gap-2" key={index}>
+                    <div className="f flex flex-row gap-2" key={index}>
                       <div
                         className="w-20 h-20 hover:border-2 border-slate-200 self-center"
                         style={{
@@ -155,10 +170,11 @@ export default function Post({
               ))}
             </div>
             <div
-              className="text-white cursor-pointer text-sm mx-3 hover:text-blue-700"
+              className="h text-white cursor-pointer text-sm mx-3 hover:text-blue-700"
               onClick={() => handleClickForComment(name)}>
               See comments
             </div>
+    
           </div>
         </div>
       </div>

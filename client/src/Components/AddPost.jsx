@@ -61,7 +61,7 @@ const useName = useContext(ComentsContext)
   return (
     <div className="containerAddPost z-10 flex flex-col items-center justify-center h-screen p-4 bg-black">
       <i
-        className="fa-solid fa-xmark text-white absolute right-4 top-4 cursor-pointer"
+        className="P fa-solid fa-xmark text-white absolute right-4 top-4 cursor-pointer"
         onClick={handleClick("Home")}></i>
       <div
         className=" w-80 h-60  self-center"
@@ -71,16 +71,19 @@ const useName = useContext(ComentsContext)
         {!isUploaded && (
           <>
             <label
-              className="block text-gray-500 text-sm font-bold relative left-2 top-16 mb-2 self-center"
+              className="K block text-gray-500 text-sm font-bold relative left-2 top-16 mb-2 self-center"
               htmlFor="imageUpload">
-              Upload Image/Video
+              Upload Image
             </label>
             <input
               type="file"
-              accept="image/*,video/*"
+              accept="image/*"
               id="imageUpload"
               onChange={handleUpload}
               className="block w-full text-sm relative top-20 -left-2 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-black file:text-yellow-400 hover:file:bg-yellow-400 hover:file:text-black transition-all duration-700"
+              style={{
+                marginLeft:"1.2em"
+              }}
             />
           </>
         )}
@@ -93,16 +96,11 @@ const useName = useContext(ComentsContext)
             <img
               src={filePreview}
               alt="Uploaded Preview"
-              className="w-40 h-auto max-h-28 rounded-lg"
+              className="J w-40 h-auto max-h-28 rounded-lg"
             />
           )}
           {/* Display video preview */}
-          {filePreview && filePreview.startsWith("data:video") && (
-            <video controls className="max-w-full h-auto rounded-lg">
-              <source src={filePreview} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          )}
+         
         </div>
       )}
       {/* Caption input field */}
@@ -118,7 +116,7 @@ const useName = useContext(ComentsContext)
             id="captionInput"
             value={caption}
             onChange={handleCaptionChange}
-            className="block w-full text-sm py-2 px-4 rounded-full border-0 bg-black text-yellow-400 focus:outline-none  focus:text-white transition-border duration-700"
+            className="block w-full text-sm py-2 mx-2 px-4 rounded-full border-0 bg-black text-yellow-400 focus:outline-none  focus:text-white transition-border duration-700"
             style={{
               borderBottom: "0.2vh solid #3d3a3a",
             }}

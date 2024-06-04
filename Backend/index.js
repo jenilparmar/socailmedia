@@ -91,18 +91,34 @@ app.get("/PostData/:id", (req, res) => {
       res.status(500).send("Error fetching data"); // Handle potential errors
     });
 });
-app.get("/GetAllPosts", (req, res) => {
-  db.collection("Posts")
-    .find({})
-    .toArray()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data", error);
-      res.status(500).send("Error fetching data");
-    });
+
+app.get("/GetAllPosts/:name", async (req, res) => {
+  const name = req.params.name;
+  let visitedPosts = [];
+
+  try {
+    // Fetch the user data
+    const user = await db.collection("FindUser").findOne({ name: name });
+    if (user && Array.isArray(user.visitedPosts)) {
+      // Convert visitedPosts to ObjectId if necessary
+      visitedPosts = user.visitedPosts.map(id =>new ObjectId(id));
+    }
+
+    // Fetch all posts
+    const allPosts = await db.collection("Posts").find({}).toArray();
+
+    // Filter out visited posts
+    const unvisitedPosts = allPosts.filter(post => !visitedPosts.some(visitedId => visitedId.equals(post['_id'])));
+
+    // console.log(unvisitedPosts);
+    res.send(unvisitedPosts);
+  } catch (error) {
+    console.error("Error fetching data", error);
+    res.status(500).send("Error fetching data");
+  }
 });
+
+
 app.get("/search/:name", (req, res) => {
   const name = req.params.name;
   db.collection("FindUser")
@@ -292,7 +308,9 @@ app.get("/deleteFromFindUser/:name/:index", (req, res) => {
         .concat(data["posts"].slice(index + 1));
 
       // Update the document with the modified array
-      return db.collection("FindUser").updateOne({ name: name }, { $set: { posts: arr } });
+      return db
+        .collection("FindUser")
+        .updateOne({ name: name }, { $set: { posts: arr } });
     })
     .then((result) => {
       res.send(result); // Send the update result to the client
@@ -302,7 +320,18 @@ app.get("/deleteFromFindUser/:name/:index", (req, res) => {
       res.status(500).send("Error deleting element from array.");
     });
 });
-
+app.get("/setVisited/:id/:name", (req, res) => {
+  const name = req.params.name;
+  const id = req.params.id;
+  db.collection("FindUser")
+    .updateOne({ name: name }, { $addToSet: { visitedPosts: id } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((e) => {
+      res.send(e);
+    });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/GetLikeButtons", (req, res) => {

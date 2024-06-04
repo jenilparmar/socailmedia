@@ -48,15 +48,7 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
         <i
           className={`i fa-solid fa-plus text-${color} justify-center self-center`}
           onClick={() => handleClick("Add Post")}></i>
-        {!isDarkMode ? (
-          <i
-            className={`i fa-regular fa-moon text-${color} justify-center self-center`}
-            onClick={() => darkMode(true)}></i>
-        ) : (
-          <i
-            className={`i fa-regular fa-sun text-${color} justify-center self-center`}
-            onClick={() => darkMode(false)}></i>
-        )}
+       
         <div
           className={`profilePhoto w-6 h-6 bg-black justify-center self-center`}
           onClick={() => {
@@ -64,7 +56,7 @@ export default function Navbar({ activeFunction, darkMode, isDarkMode }) {
             setCommentActive(true);
           }} 
           style={{
-            backgroundImage:`url(${image})`,
+            backgroundImage:`url(${image?image:"https://cdn2.vectorstock.com/i/1000x1000/11/41/male-profile-picture-vector-2051141.jpg"})`,
             backgroundPosition:"center",
             backgroundSize:"cover",
             backgroundRepeat:"no-repeat"

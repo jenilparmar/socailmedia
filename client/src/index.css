@@ -8,6 +8,9 @@
 #root{
   width: 100vw;
 }
+.SearchBox{
+  width: 5vw;
+}
 .containerScrollPage{
   position: fixed;
   left: 4%;
@@ -294,7 +297,7 @@ text-align: center;
   z-index: 20;
 }
 .overlay3{
-  border: 0.2vh solid #3d3a3a;
+  /* border: 0.2vh solid #3d3a3a; */
   width: 37.2vw;
   height: 96vh;
   background-color: transparent;
@@ -307,6 +310,7 @@ text-align: center;
   background: linear-gradient(to right, #fb00ff, #ffce08,#00d9ff, #1fff01);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
+
 }
 #d:hover{
 color: red;
@@ -434,4 +438,280 @@ color: red;
 
 .z{
   width: 280vw;
+}
+.b{
+  position: absolute;
+  top: 10%;
+  left: 36%;
+  text-align: left;
+}
+
+
+@media only screen and (max-width: 402px) {
+
+.container{
+  background-color: transparent;
+  width: 10vw;
+  height: 100vh;
+  z-index: 2;
+  gap: 5em;
+  display: flex;
+}
+.containerInbox{
+  display: none;
+}
+.containerScrollPage{
+  width: 90vw;
+  margin-left:10%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.q{
+  position: absolute;
+  left: 60%;
+}
+.a{
+  position: absolute;
+  left: 85%;
+}
+.containerPost{
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  margin-left: 0em;
+  scroll-snap-align: start;
+  z-index: 10;
+}
+.post{
+  width: 80vw;
+  height: 50vh;
+  align-self: self-start;
+  margin-left: 0em;
+}
+.post:nth-child(1){
+  margin-top: 2em;
+}
+.b{
+  position: relative;
+  top: 10%;
+  left: 10%;
+  width: fit-content;
+  text-wrap: nowrap;
+  margin-left: -1.8em;
+  align-items: center;
+  align-self: center;
+  margin-bottom: 0.5em;
+}
+.description{
+  margin-top: 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.c{
+  align-items: center;
+  align-self: center;
+  justify-content: flex-start;
+  width: 80vw;
+  border-bottom: none;
+position: relative;
+top: -5%;
+left: -13%;
+  border: 0.2vh solid #3d3a3a;
+}
+.d{
+  scroll-snap-type: y mandatory;
+}
+.e{
+  width: 78vw;
+  text-align: left;
+  text-indent: 0;
+  max-height: 4em;
+  align-self: center;
+  position: relative;
+  /* top: 1%; */
+  margin-left: -31px;
+}
+.f{
+position: relative;
+top: 20%;
+display: flex;
+flex-direction: row;
+gap: 1em;
+}
+.g{
+  display: flex;
+flex-direction: row;
+gap: 2em;
+margin-left: -1.2em;
+}
+.h{
+  font-size: 1em;
+  width: 30vw;
+  position: relative;
+  top: 10%;
+  left: -8%;
+}
+
+.l{
+  left: 40%;
+  width: fit-content;
+  top: 2%;
+}
+.M{
+  font-size: 1.7em;
+  position: fixed;
+  top: 1em;
+}
+.N{
+  position: fixed;
+  right: 8%;
+  top: 5%;
+  font-size: 1.8em;
+}
+.comm{
+  height: 95vh;
+  gap: .5em;
+}
+.O:first-child{
+  margin-top: 3em;
+}
+.O{
+  font-size: 1em;
+}
+.SearchBox{
+  width: 70vw;
+  height: 6vh;
+}
+.containerAddPost{
+  width: 90vw;
+  margin-left: -2em;
+}
+.P{
+  font-size: 1.8em;
+  position: absolute;
+  right: 6%;
+  top: 5%;
+}
+.K{
+  font-size: 1.5em;
+}
+.J{
+ height: auto;
+ max-width: 90vw;
+ max-height: 50vh;
+ width: auto;
+}
+.H{
+margin-left: 0;
+width: 700vw;
+background-color: black;
+position: relative;
+left: 10%;
+}
+.G{
+  position: relative;
+  left: 15%;
+}
+.B{
+  position: relative;
+  top: 7em;
+  left: 5%;
+  font-size: 2.5em;
+}
+.W{
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  width: 30vw;
+}
+.A{
+  position: fixed;
+  left: 18%;
+  top: 60%;
+  height: 50vh;
+}
+.Y{
+  position: relative;
+left: 0;
+max-height: 50vh;
+  
+  margin-left: 0;
+
+}
+.AB{
+  position: relative;
+  top: 20%;
+  /* left: 10%; */
+  /* background-color: #0051ff; */
+  width: 70vw;
+  margin-left: 0;
+  /* height: fit-content; */
+  max-height: 20vh;
+  margin-top: 0;
+}
+.Q{
+  z-index: 5;
+  position: relative;
+  left: 0;
+ 
+  top: 0;
+}
+.overlay3{
+  /* background-color: rgb(255, 0, 0); */
+  width: 90vw;
+  height: 75vh;
+  position: relative;
+  left: 5%;
+  top: 9%;
+}
+.AC{
+  position: absolute;
+  left: 33%;
+  top: -59%;
+}
+.AD{
+  position: absolute;
+  z-index: 50;
+  top: 27%;
+  margin-top: 0em;
+  left: 5%;
+  width: 90vw;
+}
+.AE{
+  height: 20vh;
+  width: 42vw;
+  margin-left: 5em;
+}
+.AF{
+  position: relative;
+  top: -2%;
+  left: 36%;
+}
+.containerSearchBox{
+  width: 100vw;
+  margin-left: 1em
+}
+.AG{
+position: relative;
+left: 0;
+width: 80vw;
+margin-top: 1em;
+}
+.AH{
+  position: relative;
+left: 0;
+width: 80vw;
+
+}
+.AI{
+  width: 20vw;
+  height: 20vw;
+}
+.AJ{
+  width: 50vw;
+  height: fit-content;
+}
 }

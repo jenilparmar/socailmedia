@@ -45,8 +45,8 @@ const { userName} = useContext(ComentsContext)
         name="SearchBox"
         placeholder="Search"
         id="Searchbox"
-        className="SearchBox text-white bg-transparent border-2  border-white border-solid focus:font-semibold  w-44 h-8"
-        style={{ borderRadius: "15px", marginLeft: "2.2em", width: "25vw" }}
+        className="SearchBox text-white bg-transparent border-2  border-white border-solid focus:font-semibold h-8"
+        style={{ borderRadius: "15px", marginLeft: "2.2em" }}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />

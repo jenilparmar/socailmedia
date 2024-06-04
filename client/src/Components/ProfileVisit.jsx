@@ -101,50 +101,52 @@ export default function ProfileVisit({ person, info }) {
 
   return (
     <>
-      <div className="overlay3"></div>
+      <div className="overlay3">
       <div
-        className="absolute left-80 top-0 bg-black w-screen h-screen  flex flex-col"
+        className="Q absolute left-80 top-0 bg-black w-screen h-screen  flex flex-col"
         style={{}}>
         {/* Profile header */}
-        <div className="relative left-44 top-20 -my-4 mx-4 text-white">
+        <div className="AC relative left-44 top-20 -my-4 mx-4 text-white">
           @{person}
         </div>
-        <div className="flex relative left-20 top-16 flex-row">
-          <div
-            className=" w-20 h-20 rounded-full mx-2"
+        <div
+            className="AE w-20 h-20 rounded-full mx-2"
             style={{
               backgroundImage: `url(${
                 image !== ""
                 ? image
                   : "https://cdn2.vectorstock.com/i/1000x1000/11/41/male-profile-picture-vector-2051141.jpg"
               })`,
+              backgroundColor:"red",
               backgroundSize:"cover",
               backgroundPosition:"center",
               backgroundRepeat:"no-repeat"
             }}></div>
-          <div className="text-gray-600 text-sm w-fit h-4 self-center mx-4">
-            {followingCount} following
+        <div className="AD flex relative left-20 top-16 flex-row">
+        
+          <div className="text-gray-600 text-sm w-fit h-4 text-center self-center mx-4">
+            {followingCount} <br />following
           </div>
-          <div className="text-gray-600 text-sm w-fit h-4 self-center mx-4">
-            {followersCount} followers
+          <div className="text-gray-600 text-sm w-fit h-4  text-center self-center mx-4">
+            {followersCount} <br />followers
           </div>
-          <div className="text-gray-600 text-sm w-fit h-4 self-center mx-4">
-            {postArray.length} posts
+          <div className="text-gray-600 text-sm w-fit h-4 text-center self-center mx-4">
+            {postArray.length} <br /> posts
           </div>
         </div>
-        <div className="text-center w-96 left-20 relative text-white top-24 border-b border-t border-gray-700">
+        <div className="AG text-center w-96 left-20 relative text-white top-24 border-b  border-gray-700">
           Posts
         </div>
         {!flag ? (
           <div
-            className="z-50 w-14 h-6 relative left-48 top-4 bg-blue-600 rounded-md flex justify-center cursor-pointer hover:bg-red-700"
+            className="AF z-50 w-14 h-6 relative left-48 top-4 bg-blue-600 rounded-md flex justify-center cursor-pointer hover:bg-red-700"
             onClick={addToFollow}>
             <div className="z-50 text-white  self-center text-sm p-4 text-center ">
               Follow
             </div>
           </div>
         ) : (
-          <div className="z-50 w-14 h-6 cursor-pointer relative left-48 top-4  rounded-md flex justify-center ">
+          <div className="AF z-50 w-14 h-6 cursor-pointer relative left-48 top-4  rounded-md flex justify-center ">
             <div className="z-50 text-white self-center text-sm p-4 text-center ">
               Following
             </div>
@@ -152,7 +154,7 @@ export default function ProfileVisit({ person, info }) {
         )}
 
         {/* Post list */}
-        <div className="flex flex-col overflow-auto w-96 relative top-20 left-20">
+        <div className="AH flex flex-col overflow-auto w-96 relative top-20 left-20">
           {profilePost
             .slice()
             .reverse()
@@ -165,7 +167,7 @@ export default function ProfileVisit({ person, info }) {
                 }}>
                 <div className="flex flex-row h-fit">
                   <div
-                    className="bg-black self-center  w-20 h-14"
+                    className="AI bg-black self-center  w-20 h-14"
                     style={{
                       marginLeft: "1.5vh",
                       marginBottom: "2vh",
@@ -175,11 +177,12 @@ export default function ProfileVisit({ person, info }) {
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",
                     }}></div>
-                  <div className="mx-3   self-center">{post["caption"]}</div>
+                  <div className="mx-3  AJ self-center">{post["caption"]}</div>
                 </div>
               </div>
             ))}
         </div>
+      </div>
       </div>
     </>
   );

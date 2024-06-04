@@ -50,7 +50,8 @@ const {setUserName} = useContext(ComentsContext)
     imgUrl: profilePhoto,
     following:[],
     followers:[],
-    posts:[]
+    posts:[],
+    visitedPosts:[]
   };
 
   fetch(`/Dataentry`, {
