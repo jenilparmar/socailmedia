@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { MongoClient, ObjectId } = require("mongodb");
 const dotenv = require('dotenv');
+const cors = require('cors')
 dotenv.config();
 const {
   getImageL1,
@@ -33,6 +34,13 @@ function getLikeInfo(acn, pera) {
       return e;
     });
 }
+app.use(cors(
+  {
+    origin:['https://deploy-mern-1whq.vercel.app'],
+    methods:['POST','GET'],
+    credentials:true
+  }
+))
 //////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/users/:email", (req, res) => {
   const email = req.params.email;
