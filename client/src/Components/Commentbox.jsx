@@ -57,7 +57,7 @@ export default function Commentbox() {
           .reverse()
           .map((e, index) => (
             <div className="O text-white z-20 h-fit text-sm hover:bg-gray-900 indent-4 hover:opacity-95" key={index}>
-              {e}
+              {index+1} : {e}
             </div>
           ))}
       </div>

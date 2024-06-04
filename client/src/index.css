@@ -9,7 +9,18 @@
   width: 100vw;
 }
 .SearchBox{
-  width: 5vw;
+  width: 25vw;
+}
+.Q{
+  position: relative;
+  left: 26%;
+  top: 0%;
+  height: 100%;
+}
+.AE{
+  position: relative;
+  left: 8%;
+  top: 9%;
 }
 .containerScrollPage{
   position: fixed;
@@ -53,6 +64,16 @@ h3{
   color: aliceblue;
   filter: drop-shadow(0 0 0.50rem white);
   
+}
+.AF{
+  position: relative;
+    top: -10%;
+    left: 27%;
+}
+.AD{
+  position: relative;
+  top: 7%;
+  left: 16%;
 }
 /* App.css */
 
@@ -296,15 +317,21 @@ text-align: center;
   right: 0%;
   z-index: 20;
 }
+.LS{
+  position: absolute;
+  left: 36%;
+  top: 9%;
+  /* margin-b/ottom: 1em; */
+}
 .overlay3{
   /* border: 0.2vh solid #3d3a3a; */
-  width: 37.2vw;
-  height: 96vh;
+  width: 100vw;
+  height: 100vh;
   background-color: transparent;
   position: absolute;
-  top: 9%;
-  left: 125%;
-  z-index: 50;
+  top: 0%;
+  left: 10%;
+  /* z-index: 50; */
 }
 .l{
   background: linear-gradient(to right, #fb00ff, #ffce08,#00d9ff, #1fff01);
@@ -443,9 +470,9 @@ color: red;
   width: 280vw;
 }
 .b{
-  position: absolute;
-  top: 10%;
-  left: 36%;
+  position: relative;
+  top: 0%;
+  left: 0%;
   text-align: left;
 }
 
@@ -678,20 +705,23 @@ max-height: 50vh;
 .AD{
   position: absolute;
   z-index: 50;
-  top: 27%;
+  top: 29%;
   margin-top: 0em;
   left: 5%;
   width: 90vw;
 }
 .AE{
+  position: relative;
+  left: -2%;
+  top: 0;
   height: 20vh;
   width: 42vw;
   margin-left: 5em;
 }
 .AF{
   position: relative;
-  top: -2%;
-  left: 36%;
+  top: 5%;
+  left: 33%;
 }
 .containerSearchBox{
   width: 100vw;
@@ -739,5 +769,12 @@ width: 80vw;
   left: -7%;
   width: 70vw;
   height: 60vh;
+}
+.DA{
+ position: absolute;
+ right: -2%;
+}
+.LS{
+  margin-left: 3.5em;
 }
 }

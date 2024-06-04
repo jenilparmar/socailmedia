@@ -29,6 +29,7 @@ export default function Profile() {
       setLen(profile["posts"].length);
       setFollowingCount(profile["following"].length);
       setFollowersCount(profile["followers"].length);
+     
       setLoading(false);
     } else {
       setLen(-1);
@@ -83,17 +84,17 @@ export default function Profile() {
               className="G bg-black fixed left-56 top-6 w-56 h-56"
               style={{
                 borderRadius: "50%",
-                backgroundImage: `url(${profile["imgUrl"]!=null?profile['imgUrk'] :"https://cdn2.vectorstock.com/i/1000x1000/11/41/male-profile-picture-vector-2051141.jpg"})`,
+                backgroundImage: `url(${ profile["imgUrl"]!=null ?profile['imgUrl'] :"https://cdn2.vectorstock.com/i/1000x1000/11/41/male-profile-picture-vector-2051141.jpg"})`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
               }}
             ></div>
           </div>
-          <div className="text-white B first-letter:capitalize  mx-24 text-5xl font-bold z-20">
+          <div className="LS text-white B first-letter:capitalize  mx-24 text-5xl font-bold z-20">
             {profile["name"]}
           </div>
-          <div className="W z-20 text-xl absolute right-96 mx-20 text-gray-400 top-24 flex flex-row gap-3">
+          <div className="W z-20 text-xl absolute right-64 mx-20 text-gray-400 top-28 flex flex-row gap-3">
             <div className="w-fit text-center">{followingCount == -1 ? 0 : followingCount} <br /> following</div>
             <div className="w-fit text-center">{followersCount == -1 ? 0 : followersCount} <br /> followers</div>
             <div className="w-fit text-center">{len} <br /> posts</div>
@@ -126,7 +127,7 @@ export default function Profile() {
                     }}
                   ></div>
                   <div className="mx-3   self-center">{post["caption"]}</div>
-                  <div className="self-center absolute right-8">
+                  <div className="DA self-center absolute right-8">
                     <i
                       className="fa-regular text-xl  fa-trash-can hover:text-2xl hover:text-red-600 transition-all duration-500"
                       id="d"

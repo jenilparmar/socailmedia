@@ -34,7 +34,7 @@ export default function ProfileVisit({ person, info }) {
       setFollowingCount(info["following"].length);
       clearInterval();
     } else {
-      setFollowingCount(-1);
+      setFollowingCount(0);
     }
   }, 1000);
   setInterval(() => {
@@ -42,7 +42,7 @@ export default function ProfileVisit({ person, info }) {
       setFollowersCount(info["followers"].length);
       clearInterval();
     } else {
-      setFollowingCount(-1);
+      setFollowingCount(0);
     }
   }, 1000);
 
@@ -103,7 +103,7 @@ export default function ProfileVisit({ person, info }) {
     <>
       <div className="overlay3">
       <div
-        className="Q absolute left-80 top-0 bg-black w-screen h-screen  flex flex-col"
+        className="Q  bg-black w-screen h-screen  flex flex-col"
         style={{}}>
         {/* Profile header */}
         <div className="AC relative left-44 top-20 -my-4 mx-4 text-white">
