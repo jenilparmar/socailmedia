@@ -436,6 +436,9 @@ color: red;
   }
 }
 
+.AN{
+  height: 96vh;
+}
 .z{
   width: 280vw;
 }
@@ -601,7 +604,7 @@ margin-left: -1.2em;
 .J{
  height: auto;
  max-width: 90vw;
- max-height: 50vh;
+ max-height: 35vh;
  width: auto;
 }
 .H{
@@ -713,5 +716,28 @@ width: 80vw;
 .AJ{
   width: 50vw;
   height: fit-content;
+}
+.AK{
+  position: absolute;
+  right: 20%;
+  font-size: 1.5em;
+  top: 2%;
+}
+.AL{
+  width: 100vw;
+  height: 100vh;
+}
+.AM{
+  width: 50vw;
+  position: absolute;
+  left: -10%;
+  top: -35%;
+}
+.AN{
+  position: absolute;
+  top: 40%;
+  left: -7%;
+  width: 70vw;
+  height: 60vh;
 }
 }

@@ -90,10 +90,10 @@ const {setUserName} = useContext(ComentsContext)
   
   return (
     <center style={{ backgroundColor:"#1c1c1c"}}>
-      <div className="w-11/12 h-screen flex flex-row  justify-between gap-12" style={{
+      <div className="AL w-11/12 h-screen flex flex-row  justify-between gap-12" style={{
         backgroundColor:"#1c1c1c"
       }}>
-        <div className="w-40 h-screen flex flex-col justify-center p-6 mx-20">
+        <div className="AM w-40 h-screen flex flex-col justify-center p-6 mx-20">
           <div
             className="border-2 border-yellow-500 w-56 h-56 mb-6 flex items-center justify-center cursor-pointer"
             style={{
@@ -115,7 +115,7 @@ const {setUserName} = useContext(ComentsContext)
           />
           <div className="bg-transperent text-yellow-500 -my-3 font-bold text-2xl w-56 h-fit">Add Profile Photo</div>
         </div>
-        <div className="bg-black border-2 border-gray-700 rounded-lg shadow-md w-96 self-center max-w-md p-6 mx-20" style={{ height: "96vh" }}>
+        <div className="AN bg-black border-2 border-gray-700 rounded-lg shadow-md w-96 self-center max-w-md p-6 mx-20">
           <h2 className="text-2xl font-bold mb-6 text-yellow-500 text-center">
             Sign-in
           </h2>

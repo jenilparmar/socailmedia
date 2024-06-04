@@ -43,7 +43,7 @@ export default function SearchBox({ isDarkMode, handleClick }) {
         } h-screen`}>
         <h3 className={`text-${color}`}>Search</h3>
         <i
-          className="z-20 fa-solid fa-xmark absolute top-6 right-8 text-white"
+          className="AK z-20 fa-solid fa-xmark absolute top-6 right-8 text-white"
           onClick={() => handleClick("Home")}></i>
         <br />
         <SearchInbox setFlag={setFlag} setPerson={setPerson} setInfo={setInfo} />
@@ -51,7 +51,7 @@ export default function SearchBox({ isDarkMode, handleClick }) {
       </div>
       {flag ? (
         <div
-          className="w-64 h-12 bg-black  hover:bg-slate-700 flex flex-col relative left-16  top-28 text-white text-center text-sm z-20"
+          className="w-64 h-12 bg-black rounded-md -mx-1 hover:bg-slate-700 flex flex-col relative left-16  top-28 text-white text-center text-sm z-20"
           onClick={hadnleProfile}>
           <div className="text-left font-bold text-xl">
             {info["name"]}

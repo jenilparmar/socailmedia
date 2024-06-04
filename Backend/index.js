@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { MongoClient, ObjectId } = require("mongodb");
-
+const dotenv = require('dotenv');
+dotenv.config();
 const {
   getImageL1,
   getImageL2,
@@ -11,7 +12,7 @@ const {
 
 const PORT = 5000;
 const app = express();
-url = "mongodb://127.0.0.1:27017/SocailMedia";
+url = process.env.connectionString;
 const dbName = "MemeMenia";
 let db;
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })

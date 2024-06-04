@@ -96,7 +96,7 @@ const useName = useContext(ComentsContext)
             <img
               src={filePreview}
               alt="Uploaded Preview"
-              className="J w-40 h-auto max-h-28 rounded-lg"
+              className="J w-40  max-h-28 rounded-lg"
             />
           )}
           {/* Display video preview */}
