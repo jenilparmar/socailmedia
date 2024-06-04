@@ -39,7 +39,7 @@ function getLikeInfo(acn, pera) {
 }
 app.use(cors(
   {
-    origin:['https://socialmedia-backend-xpaj.onrender.com/'],
+    origin:['https://socialmedia-backend-xpaj.onrender.com/','http://localhost:3000','https://meme-menia-for-memers.vercel.app/'],
     methods:['POST','GET'],
     credentials:true
   }
