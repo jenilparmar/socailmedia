@@ -34,13 +34,13 @@ function getLikeInfo(acn, pera) {
       return e;
     });
 }
-app.use(cors(
-  {
-    origin:['https://deploy-mern-1whq.vercel.app'],
-    methods:['POST','GET'],
-    credentials:true
-  }
-))
+// app.use(cors(
+//   {
+//     origin:['https://deploy-mern-1whq.vercel.app'],
+//     methods:['POST','GET'],
+//     credentials:true
+//   }
+// ))
 //////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/users/:email", (req, res) => {
   const email = req.params.email;
@@ -353,7 +353,9 @@ app.get("/GetLikeButtons", (req, res) => {
 
   res.send(likesObj);
 });
-
+app.get('/',(res,res)=>{
+  res.send("Hi")
+})
 app.get("/api", (req, res) => {
   res.json({
     message: {

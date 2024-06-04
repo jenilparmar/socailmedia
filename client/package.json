@@ -19,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://meme-menia-backend.vercel.app/",
+  "proxy": "https://meme-menia-backend.vercel.app",
   "eslintConfig": {
     "extends": [
       "react-app",
