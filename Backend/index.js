@@ -37,6 +37,7 @@ function getLikeInfo(acn, pera) {
       return e;
     });
 }
+app.use(express.static('build'))
 app.use(cors(
   {
     origin:['http://localhost:3000','https://meme-menia-for-memers.vercel.app/'],
