@@ -12,7 +12,7 @@ const {
   getImageL4,
 } = require("./likeConfiguration");
 
-const PORT = 5000;
+const PORT = process.env.PORT||5000;
 const app = express();
 // app.use(cors())
 url = process.env.connectionString;
