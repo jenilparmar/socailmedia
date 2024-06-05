@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import ComentsContext from "../myContext";
 import Singin from "./Singin";
-
+import axios from 'axios';
 export default function AuthenticationPage({ setAuthenticated }) {
   const [user, setUser] = useState("Login");
   const [isEmailFocused, setIsEmailFocused] = useState(false);
@@ -11,40 +11,30 @@ export default function AuthenticationPage({ setAuthenticated }) {
   const [failed, setFailed] = useState(false);
   const { setUserName } = useContext(ComentsContext);
   const handleGoToLogin = () => {
-    fetch(`/Auth/${email}/${password}`)
-      .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(res.status);
-        } else return res.json();
-      })
-      .then((data) => {
+    axios.get(`/Auth/${email}/${password}`)
+      .then((response) => {
+        const data = response.data;
         const arrayOfValue = Object.values(data)[0];
         const arrayOfKey = Object.keys(data)[0];
         if (arrayOfKey === "404") {
           alert(arrayOfValue);
         } else {
           localStorage.setItem("isAuthenticated", "true"); // Save authentication status in local storage
-          fetch(`/users/${email}`)
-            .then((res) => {
-              return res.json();
+          axios.get(`/users/${email}`)
+            .then((response) => {
+              const data = response.data;
+              console.log(data);
+              localStorage.setItem('useName', data["accountName"]);
+              setUserName(data["accountName"]);
             })
-            .then((data) => {
-              console.log(data)
-              localStorage.setItem('useName',data["accountName"])
-              setUserName(data["accountName"])
-            })
-            .catch((e) => {
-              console.log(e);
+            .catch((error) => {
+              console.log(error);
             });
           setAuthenticated(true);
         }
       })
       .catch((error) => {
-        if (error === 404) {
-          setFailed(true);
-        } else {
-          console.log(error);
-        }
+        console.log(error);
       });
   };
 

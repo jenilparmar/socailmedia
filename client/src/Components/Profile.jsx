@@ -39,7 +39,7 @@ export default function Profile() {
   }, [profile]);
 
   useEffect(() => {
-    fetch(`getProfilePosts/${userName["userName"]}`)
+    fetch(`/getProfilePosts/${userName["userName"]}`)
       .then((res) => res.json())
       .then((data) => {
         setProfilePost(data);

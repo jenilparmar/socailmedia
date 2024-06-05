@@ -15,7 +15,7 @@ export default function ProfileVisit({ person, info }) {
     setPostArray(info["posts"]); // Assuming "post" is an object
   }, []);
   useEffect(() => {
-    fetch(`getProfilePosts/${person}`)
+    fetch(`/getProfilePosts/${person}`)
       .then((res) => {
         return res.json();
       })
